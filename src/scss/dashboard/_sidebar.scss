@@ -1,0 +1,121 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.sidebar
+{
+    opacity: 0;
+    height: 0;
+    background-color: v.$indigo;
+    transition-property: opacity;
+    overflow: hidden;
+    transition-duration: 500ms;
+    .imagen-escuela
+    {
+        img
+        {
+        display: flex;
+        margin: 0 auto;
+        max-width: 25rem;
+        }
+    }
+    &.mostrar
+    {
+        opacity: 1;
+        padding: 2rem;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgb(0 0 0 / .90);
+        z-index: 9999; 
+        /*Al añadir z-index: 9999 
+        al sidebar cuando se muestra (.mostrar),
+        este se asegura de estar encima de cualquier otro contenido,
+        incluidos los <input> del formulario, sin importar que estos tengan alguna sombra, borde elevado, etc. */
+        @include m.tablet {
+          display: none;
+
+        }
+    }
+    &.ocultar
+    {
+        opacity: 0;
+    }
+    @include m.tablet {
+      height: 100%;
+      opacity: 1;
+      padding: 2rem;
+      background-color: v.$gris;
+    }
+    .contenedor-sidebar
+    {
+        display: flex;
+        align-items: center;
+        h2 
+        {
+            color: v.$blanco;
+            margin: 0;
+            text-align: center;
+        }
+        .cerrar-menu
+        {
+            display: flex;
+            margin: 0 auto;
+            height: 3rem;
+            width: 3rem;
+            img 
+            {
+                &:hover
+                {
+                    cursor: pointer;
+                }
+            }
+            @include m.tablet {
+              display: none;
+            }
+        }
+    }
+
+
+    .sidebar-nav
+    {
+        margin-top: 0.5rem;
+        a
+        {
+            color: v.$blanco;
+            display: block;
+            padding: .7rem;
+            transition-property: background-color;
+            transition-duration: 300ms;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            &:hover,
+            &.activo
+            {
+                background-color: darken(v.$rojo-oscuro, 20%);
+                border-radius: .5rem;
+            }
+            @include m.tablet {
+              font-size: 2.3rem;
+              margin-bottom: 2rem;
+              text-align: center;
+            }
+        }
+    }
+    .cerrar-sesion-mobile
+    {
+        margin-top: 5rem;
+        .cerrar-sesion{
+            @include m.boton (v.$indigo, v.$blanco);
+        }
+        @include m.tablet {
+            display: none;
+          
+        }
+    }
+}

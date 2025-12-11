@@ -1,0 +1,19 @@
+{
+    "name": "ricardo/uptask-mvc",
+    "description": "Proyecto UpTask MVC, PHP 8, SASS",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\": "classes/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "phpoffice/phpspreadsheet": "^4.4",
+        "phpoffice/phpword": "^1.4",
+        "dompdf/dompdf": "^3.1"
+    }
+}

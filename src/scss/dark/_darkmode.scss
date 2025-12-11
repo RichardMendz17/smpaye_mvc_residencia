@@ -1,0 +1,259 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@media(prefers-color-scheme: dark)
+{
+    $grisOscuro: #2C2C3B;
+    body
+    {
+        background-color: $grisOscuro;
+    }
+    .tagline,
+    .formulario label,
+    .login .acciones a,
+    .crear .acciones a
+    {
+        color: v.$blanco;
+    }
+    .descripcion-pagina,
+    .formulario .campo input,
+    .nombre-pagina
+    {
+        color: darken(v.$grisClaro, 15%);
+    }
+    .modal .formulario .input-opciones .campo-modal input,
+    .formulario .campo input, 
+    .modal .unico-campo .asignar-unico-campo .campo-modal input
+    {
+        background-color: lighten($grisOscuro, 15%);
+        &::placeholder
+        {
+            color: darken($color: v.$grisClaro, $amount: 20%);
+        }
+
+    }
+    .modal .formulario  .lista-seleccionados-titulo{
+        color: lighten($color: v.$gris, $amount: 20%);
+    }  
+    .alerta.error
+    {
+        background-color: v.$blanco;
+    }
+    .sidebar
+    {
+    @include m.tablet 
+      {
+        background-color: darken($grisOscuro, 4%) ;
+      }
+      .sidebar-nav a{
+        &.activo,
+        &:hover
+        {
+            background-color: v.$rojo-oscuro;
+        }
+      }
+    }
+
+ 
+    .barra-mobile,
+    .barra {
+        background-color: darken($grisOscuro, 7%);
+    }
+    .barra  
+    {
+        p
+        {
+            color: v.$naranja;
+            span 
+            {
+            color: v.$grisClaro;
+            }
+        }
+        .cerrar-sesion
+        {
+            @include m.boton (v.$rojo-oscuro, v.$blanco);
+            padding: 1rem;
+            font-size: 1.4rem;
+        }
+    }
+    .barra__opciones__paginacion
+    {
+        .paginacion, .barra-opciones
+        {        
+            .paginacion_numeracion
+            {
+                color: v.$blanco;
+            }
+        }
+        .periodos-id
+        {
+            form 
+            {
+                label
+                {
+                    color: v.$grisClaro;
+                }
+            }
+        }        
+    }
+
+    .filtros
+    {
+        background-color: lighten($grisOscuro, 10%);
+        h2,
+        label
+        {
+            color: v.$blanco;
+        }
+        input[type="radio"]
+        {
+            accent-color: v.$naranja;
+        }
+    }
+    .dashboard
+    {
+        background-color: $grisOscuro;
+        .enlace
+        {
+            color: v.$indigo;
+            background-color: lighten($grisOscuro, 50%);
+
+            &:hover
+            {
+                color: darken(v.$grisClaro, 20%);
+            }
+        }
+        p
+        {
+            color: v.$blanco;
+
+        }
+        .formulario 
+        {
+            input:not([type=submit])
+            {
+            background-color: lighten($grisOscuro, 20%);
+            color: v.$blanco;
+            &::placeholder
+            {
+                color: darken(v.$grisClaro, 30%);
+            }
+
+            }
+            .campo-automatico
+            {
+                input:not([type=submit])
+                {
+                    background-color: lighten(v.$negro, 50%);
+                }
+                input::placeholder 
+                {
+                color: v.$blanco;
+                }        
+            }
+            .campo-dia
+            {
+                input:disabled 
+                {
+                background-color: v.$negro;
+                color: #999;
+                border: 1px solid #ccc;
+                }
+                input
+                {
+                    border: 1px solid v.$negro;
+                }
+            }
+
+        }
+    }
+    .listado-cursos .curso, .alumno-header, .alumno-item
+    {
+        background-color: lighten($grisOscuro, 20%);
+        &:hover
+        {
+            background-color: lighten($grisOscuro, 15%);
+        }
+    }
+    .listado-alumnos .alumno
+    {
+        background-color: lighten($grisOscuro, 10%);
+        border-bottom: none;
+
+        p 
+        {
+            color: v.$grisClaro;
+        }
+      
+    }
+    .no-alumnos
+    {
+        color: darken($color: v.$blanco, $amount: 20%);
+    }  
+    .modal .formulario 
+    {
+        background-color: $grisOscuro;
+        input[type="text"]
+        {
+            background-color: lighten($grisOscuro, 20%);
+            border: none;
+            color: v.$blanco;
+
+            &::placeholder
+            {
+                color: lighten(v.$grisClaro, 20%);
+            }
+        }
+        legend
+        {
+            color: v.$grisClaro;
+        }
+    }
+
+
+      
+    .detalles-curso 
+    {
+        .informacion-curso
+        {
+            table.registros
+            {
+                thead
+                {
+                    th 
+                    {
+                    }
+                }
+                tbody
+                {
+                    td
+                    {
+                    color: darken(v.$blanco, 20%);
+                    }
+                }
+            }
+        }
+        .curso-dropdown button i 
+        {
+            color: v.$blanco;
+        } 
+    }
+    //Registros de cada tabla vista de resultados/buscar
+    table.registros
+    {
+        thead
+        {
+            th 
+            {
+                //color: v.$blanco; ya lo tiene por defecto
+            }
+        }
+        tbody
+        {
+                td 
+                {
+                color: v.$blanco;
+                    
+                }
+        }
+    }    
+}

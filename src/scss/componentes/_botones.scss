@@ -1,0 +1,51 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+//Rojo
+.boton-rojo-flex {
+    @include m.botonDisplay(v.$rojo, v.$blanco, flex);
+}
+
+.boton-rojo-block {
+    @include m.botonDisplay(v.$rojo, v.$blanco, inline-block);
+}
+
+//Azul
+.boton-azul-flex {
+    @include m.botonDisplay(v.$azul, v.$blanco, flex);
+}
+
+.boton-azul-block {
+    @include m.botonDisplay(v.$azul, v.$blanco, inline-block);
+}
+
+.boton-rojo-no-margin {
+    @include m.boton-no-margin(v.$rojo, v.$blanco, block);
+}
+
+// Amarillo
+.boton-amarillo-flex {
+    @include m.botonDisplay(v.$amarillo, v.$blanco, flex);
+}
+
+.boton-amarillo-block {
+    @include m.botonDisplay(v.$amarillo, v.$blanco, inline-block);
+}
+
+
+//Verde
+.boton-verde-flex {
+    @include m.botonDisplay(v.$verde, v.$blanco, flex);
+}
+
+.boton-verde-block {
+    @include m.botonDisplay(v.$verde, v.$blanco, inline-block);
+}
+
+
+.boton-blanco-flex {
+    @include m.botonDisplay(v.$negro, v.$blanco, flex);
+}
+
+.boton-blanco-block {
+    @include m.botonDisplay(v.$negro, v.$blanco, inline-block);   
+}

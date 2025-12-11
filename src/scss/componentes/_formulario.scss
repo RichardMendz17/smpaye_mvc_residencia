@@ -1,0 +1,114 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario {
+    margin-top: 2rem;
+    .campo 
+    {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        label {
+            flex: 0 0 10rem;
+        }
+        input {
+            flex:  1;
+            padding: 1rem;
+            border: none;
+            background-color: lighten(v.$gris, 40%);
+
+        }
+
+    }
+    .campo-dia
+    {
+        input:disabled 
+        {
+        background-color: v.$negro;
+        color: #999;
+        border: 1px solid #ccc;
+        }
+        input
+        {
+            border: 1px solid v.$negro;
+        }
+    }
+
+}
+.campo {
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 2rem auto;
+    align-items: center;
+    position: relative;
+    label {
+        flex:0 0 20rem  ;
+    }
+    input {
+        border: none;
+        padding: calc(v.$separacion / 5);
+        border-radius: 1rem;
+        width: 50rem;
+    }
+   select {
+    width: 50rem;
+    text-align: center;        // centra las opciones (en algunos navegadores)
+    text-align-last: center;   // centra la opción seleccionada
+    }
+
+
+}
+.campo-checkbox 
+{
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin: 2rem auto;
+    label
+    {
+       flex: 0 0 50rem;
+    }
+    input {
+        padding: calc(v.$separacion / 5);
+        border-radius: 1rem;
+        width: 2rem;
+    } 
+}
+
+.campo-number
+{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    align-items: center;
+    label
+    {
+        flex: 0 0 18rem;
+    }
+    input {
+        padding: calc(v.$separacion / 5);
+        border: none;
+        border-radius: 1rem;
+        width: 10rem;
+    } 
+}
+.registros thead {
+    background-color: #f9f9f9;
+}
+
+.resultados-tabla {
+    max-height: 28rem;
+    overflow-y: auto;
+
+}
+.comprobante {
+    color: white;
+    &:hover {
+        background-color: darken( v.$azul, 10% );
+        cursor: pointer;
+    }
+ }

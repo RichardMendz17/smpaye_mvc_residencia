@@ -1,0 +1,41 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+.centrar-login
+{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  .login {
+
+        .imagen-escuela
+    {
+        img
+        {
+        display: flex;
+        margin: 0 auto;
+        max-width: 40rem;
+
+        }
+
+    }
+      .uptask{
+      @include m.textoDegradado(v.$azul);
+      }
+
+      input[type="submit"]{
+        @include m.boton (v.$rojo-oscuro, v.$blanco);
+      }
+      .acciones{
+        a{
+          color: v.$cyan;
+        }
+      }
+      .btn-login
+      {
+        margin: 0 auto;
+        border-radius: 1rem;
+      }
+
+  }
+}

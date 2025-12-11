@@ -1,0 +1,194 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+.detalles-curso
+{
+    display: flex;
+    align-items: center;   /* centra vertical */
+    justify-content: center; /* centra horizontal */
+
+    .informacion-curso
+    {
+        width: 90%;
+        table.registro-curso
+        {
+            width: 100%;
+            margin: 0 auto;
+            border: 0;
+            thead
+            {
+                background-color: v.$grisOscuro;
+                border-radius: 5rem;
+
+                th
+                {
+                    color: v.$blanco;
+                    padding: 1rem; 
+                }
+            }
+            tbody
+            {
+                    td
+                    {
+                        padding: 1rem;
+                        text-align: center;
+                        font-weight: v.$bold;
+                        font-size: 2rem;
+                        background-color: darken($color: v.$blanco, $amount: 20%);
+                    }
+            }
+        }
+    }
+
+    .curso-dropdown 
+    {
+        position: relative;
+        display: inline-block;
+        align-items: center;
+        td .config-btn-estado i
+        {
+            font-size: .5rem;
+        }
+        .config-btn i {
+            font-size: 5rem;
+        }
+
+        /* Ícono dentro de celdas de tabla */
+
+
+        .config-btn 
+        {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        }
+
+        .dropdown-content
+        {
+            // Estilos generales
+            display: none;
+            position: absolute;
+            background-color: v.$blanco;
+            min-width: 10rem;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+            z-index: 99;
+
+            a,
+            button
+            {
+                display: block;
+                width: 100%;
+                padding: 8px;
+                text-decoration: none;
+                color: black;
+                border: none;
+                background: none;
+                text-align: left;
+                font-family: inherit;
+                font-size: inherit;
+                cursor: pointer;
+            }
+
+            .editar-curso
+            {
+                background-color: v.$azul;
+                &:hover
+                {
+                    background-color: lighten($color: v.$azul, $amount: 20%);
+                }
+            }
+
+            .eliminar-curso 
+            {
+                background-color: v.$rojo;
+                &:hover
+                {
+                    background-color: lighten($color: v.$rojo, $amount: 20%);
+                }
+            }
+            .estado-curso
+            {
+                background-color: v.$grisOscuro;
+                &:hover
+                {
+                    background-color: lighten($color: v.$grisClaro, $amount: 20%);
+                }
+            }
+        }
+
+        .dropdown-content a 
+        {
+        display: block;
+        padding: 8px;
+        text-decoration: none;
+        color: black;
+        }
+
+        &:hover .dropdown-content 
+        {
+            display: block;
+        }
+    }
+}
+
+
+.curso-opciones
+{
+    display: block;
+    margin-top: 1rem;
+
+    @include m.tablet
+    {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    }
+    .opciones-curso
+    {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contenedor-agregar-alumnos
+    {
+        padding: 1rem;
+        .agregar-alumnos
+        {
+            @include m.boton(v.$cyan, v.$blanco);
+        }
+    }
+
+    .contenedor-agregar-horario
+    {
+        padding: 1rem;
+        .agregar-horario
+        {
+            @include m.boton(v.$indigo, v.$blanco);
+        }
+    }
+    .contenedor-obtener-boleta
+    {
+        padding: 1rem;
+        .obtener-boleta
+        {
+            @include m.boton(v.$amarillo, v.$blanco);
+        }
+    }
+}
+    
+
+
+.acciones-crud {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 1rem;   
+
+    a {
+        margin: 0; 
+    }
+
+   
+}

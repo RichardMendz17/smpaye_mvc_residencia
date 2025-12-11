@@ -1,0 +1,94 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.filtros {
+
+
+    background-color: lighten(v.$blanco, 20%);
+    border-radius: 1rem;
+    padding: 3rem;
+    @include m.tablet {
+          padding: 2rem;
+    }
+    .filtros-inputs{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas en móvil */    
+        justify-items: center; /* Centra el contenido de cada celda */        
+        @include m.tablet {
+            display: flex;
+        }
+    }
+
+    h2 {
+        color: v.$indigo;
+        font-size: 2.8rem;
+        @include m.tablet {
+          margin: 0;
+        }
+    }
+
+    .campo-filtros {
+        margin-left: auto;
+        margin-right: auto;
+        align-items: center;
+        gap: 0.5rem;
+        display: inline-block;
+        margin-bottom: 0;
+        label {
+            white-space: nowrap;
+        }
+
+        @include m.tablet {
+            display: flex;
+            flex: 1 1 auto; // permite que se reduzca y envuelva
+
+        }
+    }
+
+    input[type="radio"]{
+        accent-color: v.$indigo;
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+}
+    .filtros-inputs{
+        @include m.tablet {
+            display: flex;
+            gap: 2rem;
+        }
+    }
+
+    h2 {
+        color: v.$rojo-oscuro;
+        font-size: 2.8rem;
+        @include m.tablet {
+          margin: 0;
+        }
+    }
+
+    .campo-filtros {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2rem;
+        align-items: center;
+        gap: 0.5rem;
+        display: inline-block;
+
+    
+        label {
+            white-space: nowrap;
+        }
+
+        @include m.tablet {
+            display: flex;
+            margin-bottom: 0;
+            flex: 1 1 auto; // permite que se reduzca y envuelva
+
+        }
+    }
+
+    input[type="radio"]{
+        accent-color: v.$indigo;
+        width: 1.6rem;
+        height: 1.6rem;
+    }

@@ -1,0 +1,52 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+table.registros
+{
+    margin: 0 auto;
+    width: 98%;
+    border-spacing: 0;
+    min-width: 100rem;
+      border-collapse: separate; /* evita que los bordes se colapsen */
+  border-spacing: 0 10px;   /* (horizontal vertical) separación entre filas */
+    thead
+    {
+        background-color: v.$grisOscuro;
+        th 
+        {
+            color: v.$blanco;
+            padding: 1.1rem; 
+        }
+    }
+    tbody
+    {
+        tr 
+        {
+            background-color: v.$azul-ligero ;
+            padding: 1rem;
+        }
+        td
+        {
+            text-align: center;
+            font-weight: v.$bold;
+            font-size: 2rem;
+        }
+        td.text-sm
+        {
+            font-size: 1.5rem
+        }
+
+
+    }
+}
+
+
+.acciones-crud
+{
+    gap: 1rem;   
+    a
+    {
+        margin: 0;
+    }
+
+}
