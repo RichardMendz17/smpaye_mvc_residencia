@@ -15,21 +15,36 @@ class Router
     ];
 
     private array $protectedRolesRoutes = [
-        // Estudiante
+        //-> Estudiante
         'student' => [
-            '/dashboard', '/perfil', '/ingles-dashboard', '/curso-ingles', '/api/alumnos-curso', '/cambiar-password', '/api/horario-curso', '/api/boleta-alumno', '/api/generar-boleta-alumno',
+            // Enlace Perfil y dashboard
+            '/dashboard', '/perfil', '/cambiar-password',
+
             // Rutas de actividades estraescolares
-            '/actividades-extraescolares'
+            '/actividades-extraescolares',
+            '/curso-actividades-extraescolares',
+
+            // Api de alumnos del curso
+            '/api/alumnos-curso',
+
+            //Api de Horario del curso
+            '/api/horario-curso',
+
+            // Api de boleta de curso
+            '/api/boleta-alumno',
+            '/api/generar-boleta-alumno',
         ],
 
-        // Jefe de Carrera
+        ///-> Jefe de Carrera
         'career_manager' => [
-            '/dashboard', '/perfil', '/calificaciones-alumno', '/cambiar-password'
+            // Enlace Perfil y dashboard
+            '/dashboard', '/perfil',  '/cambiar-password',
+            '/calificaciones-alumno'
         ],
 
         // Coordinadores de cada modulo y su subordinado
 
-        // Coordinador de Actividades Extraescolares
+        //-> Coordinador de Actividades Extraescolares
         'extracurricular_activities_coordinator' => [
             // Enlace Perfil y dashboard
             '/dashboard', '/perfil', '/cambiar-password',
@@ -44,10 +59,10 @@ class Router
             '/crear-curso-actividades-extraescolares', '/curso-actividades-extraescolares', 
             '/cursos-actualizar-actividades-extraescolares', '/curso-eliminar-actividades-extraescolares',
             '/curso-actualizar-estado-actividades-extraescolares',
+
             // Enlace CRUD tipos de actividades extraescolares 
             '/tipos-curso', '/tipos-curso-crear', '/tipos-curso-actualizar', 
             '/tipos-curso-buscar', '/tipos-curso-eliminar',
-
 
             // Api Alumnos
             '/api/alumnos-curso-eliminar', '/api/alumnos-curso-calificar', '/api/alumnos-curso', 
@@ -57,12 +72,29 @@ class Router
             '/api/horario-curso', '/api/horario-curso-agregar',  '/api/horario-curso-eliminar'
         ],
 
-            // Instructor de actividades extraescolares
-            'extracurricular_activities_instructor' => [
-            '/dashboard', '/perfil', '/calificaciones-alumno', '/cambiar-password'
-            ],
+        //-> Instructor de actividades extraescolares
+        'extracurricular_activities_instructor' => [
+            // Enlace Perfil y dashboard
+            '/dashboard', '/perfil', '/cambiar-password',
 
-        // Coordinador de Créditos Complementarios
+            // Enlace calificaciones
+            '/calificaciones-alumno',
+
+            // Enlace actividades extraescolares cursos
+            '/actividades-extraescolares',
+
+            // Enlace a CURSO actividades extraescolaes
+            '/curso-actividades-extraescolares', 
+
+            // Api Alumnos
+            '/api/alumnos-curso-calificar', '/api/alumnos-curso', 
+
+            // Api del horario
+            '/api/horario-curso'
+
+        ],
+
+        // -> Coordinador de Créditos Complementarios
         'complementary_credits_coordinator' => [
             '/dashboard', '/perfil', '/calificaciones-alumno', '/cambiar-password', '/tipos-curso'
         ],

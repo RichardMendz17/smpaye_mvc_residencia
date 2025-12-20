@@ -55,16 +55,17 @@
 </div>
 <hr>
 <div class="campo-checkbox">
-    <input type="hidden" name="curso[inscripcion_alumno]" value="No permitido">
     <label for="inscripcion">Permitir que los alumnos se inscriban</label>
-    <input type="checkbox" id="inscripcion" name="curso[inscripcion_alumno]" value="Permitido">
+    <input type="checkbox" id="inscripcion" name="curso[inscripcion_alumno]">
+    <input type="hidden" id="inscripcion_valor" name="curso[inscripcion_alumno]">
 </div>
 <hr>
 <div class="campo-number">
-    <input type="hidden" name="curso[limite_alumnos]" value="Null">
     <label for="limite_alumnos">Establecer un limite de cupos para el curso</label>
-    <input type="checkbox" id="limite_alumnos" onclick="document.getElementById('cantidad_limite_alumnos').disabled = !this.checked">
-    <label for="cantidad_limite_alumnos">Cantidad Limite de Cupos:</label><input type="number" id="cantidad_limite_alumnos" name="curso[limite_alumnos]" disabled>
+    <input type="checkbox" id="limite_alumnos">
+    <label for="cantidad_limite_alumnos">Cantidad Limite de Cupos:</label>
+    <input type="number" id="cantidad_limite_alumnos" placeholder="Ej: 30">
+    <input type="hidden" id="cantidad_final" name="curso[limite_alumnos]">
 </div>
 <hr>
 <div class="campo-number">

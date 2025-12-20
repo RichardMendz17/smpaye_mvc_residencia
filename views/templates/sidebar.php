@@ -36,7 +36,8 @@
 
         <?php if(es_career_manager())
                 { ?>
-
+                    <a class="<?php echo ($sidebar_nav ==='Cursos de Actividades Extraescolares') ? 'activo' : ''; ?>" href="/residencia-profesional">Avance Global <br> Del Estudiante</a>
+                    <a class="<?php echo ($sidebar_nav ==='Cursos de Actividades Extraescolares') ? 'activo' : ''; ?>" href="/residencia-profesional">Residencia <br> Profesional</a>
         <?php   };?>
 
         <?php if(es_extracurricular_activities_coordinator())
@@ -47,6 +48,7 @@
 
         <?php if(es_extracurricular_activities_instructor())
                 { ?>
+                    <a class="<?php echo ($sidebar_nav ==='Cursos de Actividades Extraescolares') ? 'activo' : ''; ?>" href="/actividades-extraescolares"> Cursos de <br> Actividades <br> Extraescolares</a>
 
         <?php   };?>
 

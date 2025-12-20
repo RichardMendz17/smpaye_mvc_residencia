@@ -171,7 +171,7 @@
 <?php  include_once __DIR__ . '/footer-actividades-extraescolares-dashboard.php'; ?>
 
 <?php
-$script = '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+$script .= '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
 if (es_extracurricular_activities_coordinator()) 
 {

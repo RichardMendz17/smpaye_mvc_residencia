@@ -119,7 +119,7 @@ class ActividadesExtraescolaresDashboardController
                 $periodos = Periodo::SQL("SELECT DISTINCT periodos.id, periodos.meses_Periodo, periodos.year
                 FROM cursos
                 JOIN periodos ON cursos.periodo_id = periodos.id
-                WHERE cursos.instructor_id = {$persona_id}
+                WHERE cursos.encargado_id = {$persona_id}
                 ORDER BY periodos.year DESC, periodos.meses_Periodo DESC");
             break; // Alumno
             case 1: 
@@ -198,6 +198,7 @@ class ActividadesExtraescolaresDashboardController
             {
                 $curso->sincronizar($_POST);
                 $curso_Requisitos->sincronizar($_POST);
+                debuguear($_POST);
                 // Verificamos si se coloro un minimo de cursos aprobados
                 if ($curso_Requisitos->minimo_aprobados !== 'Null' && is_numeric($curso_Requisitos->minimo_aprobados) && $curso_Requisitos->minimo_aprobados >= 1)
                 {
@@ -228,7 +229,6 @@ class ActividadesExtraescolaresDashboardController
                             $curso_Requisitos->id_curso = $id_registro;
                             $curso_Requisitos->curso_excluido = $id_registro;
                             $resultado = $curso_Requisitos->guardar();
-
                             if (!campoVacio($resultado))
                             {
                                 //echo 'Se guardo un curso en con junto con sus requisitos';
