@@ -69,10 +69,11 @@
 </div>
 <hr>
 <div class="campo-number">
-    <input type="hidden" name="curso_requisitos[minimo_aprobados]" value="Null">
     <label for="cursos_necesarios">Establecer una cantidad de cursos aprobados requeridos para ingresar al curso actual</label>
-    <input type="checkbox" id="cursos_necesarios" onclick="document.getElementById('cantidad_cursos_necesarios').disabled = !this.checked">
-    <label for="cantidad_cursos_necesarios">Cantidad de Cursos Necesarios:</label><input type="number" id="cantidad_cursos_necesarios" name="curso_requisitos[minimo_aprobados]" disabled>
+    <input type="checkbox" id="cursos_necesarios">
+    <label for="cantidad_cursos_necesarios">Cantidad de Cursos Necesarios:</label>
+    <input type="number" id="cantidad_cursos_necesarios" placeholder="Ej:2">
+    <input type="hidden" id="cantidad_final_cursos_necesarios" name="curso_requisitos[minimo_aprobados]">
 </div>
 <hr>
 <input type="hidden" name="curso[estado]" value="Creado">
