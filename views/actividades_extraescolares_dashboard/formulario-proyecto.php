@@ -74,6 +74,7 @@
     <label for="cantidad_cursos_necesarios">Cantidad de Cursos Necesarios:</label>
     <input type="number" id="cantidad_cursos_necesarios" placeholder="Ej:2">
     <input type="hidden" id="cantidad_final_cursos_necesarios" name="curso_requisitos[minimo_aprobados]">
+    <input type="hidden" id="curso_requisitos" name="curso[requisitos]">
 </div>
 <hr>
 <input type="hidden" name="curso[estado]" value="Creado">

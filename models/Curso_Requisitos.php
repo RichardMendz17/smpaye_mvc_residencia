@@ -14,13 +14,13 @@ class Curso_Requisitos extends ActiveRecord
     public $minimo_aprobados;
     public $curso_excluido;
 
-
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
         $this->id_curso = $args['id_curso'] ?? '';
         $this->minimo_aprobados = $args['minimo_aprobados'] ?? '';
         $this->curso_excluido = $args['curso_excluido'] ?? '';
+
     }
 
     public function validarCursoRequisitos()
@@ -32,12 +32,11 @@ class Curso_Requisitos extends ActiveRecord
         if (campoVacio($this->minimo_aprobados))
         {
             self::$alertas['error'][] = 'La cantidad de Cursos minimos aprobados es necesaria';
-        }        
+        }
         if (campoVacio($this->curso_excluido))
         {
             self::$alertas['error'][] = 'El Tipo de Actividad extraescolar del curso es obligatorio';
-        }
-         
+        }       
         return self::$alertas;
     }
     

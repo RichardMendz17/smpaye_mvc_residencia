@@ -184,72 +184,84 @@ class ActividadesExtraescolaresDashboardController
         $periodos = Periodo::all();
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
+            // Creamos los objetos
             $curso = new Curso($_POST['curso']);
-            $curso_Requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
-            if($_POST['curso']['limite_alumnos'] !== 'Null' || $_POST['curso']['limite_alumnos'] <= '0'  || campoVacio($_POST['curso']['limite_alumnos'])) 
+
+            // Sincronizamos objeto de curso
+            $curso->sincronizar($_POST);
+
+            // Validamos si se van a poner requisitos
+            if ($curso->requisitos === 'Si')
             {
-                $alertas['error'][] = 'Introduzca una cantidad valida para el limite de cupos';
-            } 
-            if($_POST['curso_requisitos']['minimo_aprobados'] !== 'Null' && $_POST['curso_requisitos']['minimo_aprobados'] <= '0'  || campoVacio($_POST['curso_requisitos']['minimo_aprobados'])) 
-            {
-                $alertas['error'][] = 'Introduzca una cantidad valida para el limite de de cursos requeridos para ingresar al curso actual';
-            }
-            else 
-            {
-                $curso->sincronizar($_POST);
+                // En caso de que la variable sea 'Si' sincronizamos datos
+                $curso_Requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
                 $curso_Requisitos->sincronizar($_POST);
-                debuguear($_POST);
-                // Verificamos si se coloro un minimo de cursos aprobados
-                if ($curso_Requisitos->minimo_aprobados !== 'Null' && is_numeric($curso_Requisitos->minimo_aprobados) && $curso_Requisitos->minimo_aprobados >= 1)
+                // Verificamos que sea numerico
+                if (!is_numeric($curso_Requisitos->minimo_aprobados))
+                {
+                    $alertas['error'][] = 'Coloque un minimo de actividades aprobadas necesarias para ingresar al curso';
+                }
+                // Verificamos que el valor sea como minimo mayor a 0
+                else 
+                {
+                    if ($curso_Requisitos->minimo_aprobados <= 0)
+                    {
+                        $alertas['error'][] = 'Cantidad de actividades aprobadas para ingresar al curso invalida';
+                    }
+                }
+                // Si no hay alertar declaramos la variable de $requisitos que posteriormente indicara que deberan registrarse los requisitos
+                if (empty($alertas))
                 {
                     $requisitos = true;
-                } 
+                }
                 else
                 {
                     $requisitos = false;
                 }
-               //Validación
-               // Primero validamos curso
-                $alertas = $curso->validarCurso();
-                if (empty($alertas)) 
-                {                 
-                    // Generar una URL única
-                    $hash = md5(uniqid());
-                    $curso->url = $hash;
-                    // Guardar el curso
-                    //debuguear($curso);
-                    $resultado = $curso->guardar();
-
-                    $id_registro = $resultado['id'];
-                    if (!campoVacio($id_registro))
-                    {
-                        // Si el curso se guardo entonces verificamos si el usuario coloco requisitos
-                        if (isset($requisitos) && $requisitos === true) 
-                        {
-                            $curso_Requisitos->id_curso = $id_registro;
-                            $curso_Requisitos->curso_excluido = $id_registro;
-                            $resultado = $curso_Requisitos->guardar();
-                            if (!campoVacio($resultado))
-                            {
-                                //echo 'Se guardo un curso en con junto con sus requisitos';
-                                $tabla = 'cursos';
-                                $evento = new BitacoraEventos;
-                                $evento->eventos(1, $id_registro, $tabla);
-                                header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
-                                exit; // OBLIGATORIO para que se haga la redirección correctamente
-                            }
-                        } 
-                        else
-                        {
-                                $tabla = 'cursos';
-                                $evento = new BitacoraEventos;
-                                $evento->eventos(1, $id_registro, $tabla);
-                                header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
-                                exit; // OBLIGATORIO para que se haga la redirección correctamente                               
-                        }
-                    }   
-                }
             }
+            //Validación
+            // Ahora vamos a validar las alertas previas para la cantidad de cursos necesarios para ingresar al curso actual
+            // Y vamos a mezclarlas con las alertas para validar el curso
+            $alertas = array_merge($alertas, $curso->validarCurso());
+            if (empty($alertas)) 
+            {
+                // Generar una URL única
+                $hash = md5(uniqid());
+                $curso->url = $hash;
+                // Guardar el curso
+                //debuguear($curso);
+                $resultado = $curso->guardar();
+
+                $id_registro = $resultado['id'];
+                if (!campoVacio($id_registro))
+                {
+                    // Si el curso se guardo entonces verificamos si el usuario coloco requisitos
+                    if ($requisitos === true) 
+                    {
+                        $curso_Requisitos->id_curso = $id_registro;
+                        $curso_Requisitos->curso_excluido = $id_registro;
+                        $resultado = $curso_Requisitos->guardar();
+                        if (!campoVacio($resultado))
+                        {
+                            //echo 'Se guardo un curso en con junto con sus requisitos';
+                            $tabla = 'cursos y su requisito';
+                            $evento = new BitacoraEventos;
+                            $evento->eventos(1, $id_registro, $tabla);
+                            header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                            exit; // OBLIGATORIO para que se haga la redirección correctamente
+                        }
+                    } 
+                    else
+                    {
+                            $tabla = 'cursos';
+                            $evento = new BitacoraEventos;
+                            $evento->eventos(1, $id_registro, $tabla);
+                            header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                            exit; // OBLIGATORIO para que se haga la redirección correctamente                               
+                    }
+                }   
+            }
+            
         }
         
         $router->render('actividades_extraescolares_dashboard/crear-curso-actividad-extraescolar', [
@@ -338,6 +350,16 @@ class ActividadesExtraescolaresDashboardController
                 if (validarTipoContenido($tipo)) 
                 {
                     $curso = Curso::find($id);
+                    // Una vez capturamos el id verificamos si a este curso se le asignaron requisitos en la tabla de
+                    // curso_requisitos
+                    // guardamos el id del curso encontrado
+                    $id_curso = $curso->id;
+                    $curso_Requisitos = Curso_Requisitos::where('id_curso',$id_curso);
+                    if (!campoVacio($curso_Requisitos))
+                    {
+                        // Si se encuentra un registro para cursos requisitos, lo eliminamos
+                        $curso_Requisitos->eliminar();
+                    }
                     $resultado =  $curso->eliminar();
                     if (!campoVacio($resultado))
                     {
@@ -368,13 +390,17 @@ class ActividadesExtraescolaresDashboardController
         $alertas = [];
         isAuth();
         $curso = Curso::find($id);
-        $docentes = Personal::all();
+        $personal = Personal::all();
         $aulas = Aula::all();
-        $niveles = TipoCurso::all();
+        $tipos_curso = TipoCurso::all();
         $periodos = Periodo::all();
         if ($curso == false)
         {
             header("Location: /dashboard");
+        }
+        if ($curso->requisitos = 'Si')
+        {
+            $curso_Requisitos = Curso_Requisitos::where('id_curso', $id);
         }
         $alertas = Curso::getAlertas();
         if($_SERVER['REQUEST_METHOD'] === 'POST')

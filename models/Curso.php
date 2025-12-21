@@ -7,7 +7,18 @@ use Model\ActiveRecord;
 class Curso extends ActiveRecord
 {
     protected static $tabla = 'cursos';
-    protected static $columnasDB = ['id', 'tipo_curso_id', 'url', 'periodo_id', 'aula_id', 'encargado_id', 'inscripcion_alumno', 'limite_alumnos', 'estado'];
+    protected static $columnasDB = [
+        'id',
+        'tipo_curso_id',
+        'url',
+        'periodo_id',
+        'aula_id',
+        'encargado_id',
+        'inscripcion_alumno',
+        'limite_alumnos',
+        'estado',
+        'requisitos'
+    ];
 
     public $id;
     public $tipo_curso_id;
@@ -18,6 +29,7 @@ class Curso extends ActiveRecord
     public $inscripcion_alumno;
     public $limite_alumnos;
     public $estado;
+    public $requisitos;
 
 
 
@@ -32,6 +44,7 @@ class Curso extends ActiveRecord
         $this->inscripcion_alumno = $args['inscripcion_alumno'] ?? '';
         $this->limite_alumnos = $args['limite_alumnos'] ?? '';
         $this->estado = $args['estado'] ?? '';
+        $this->requisitos = $args['requisitos'] ?? '';
     }
 
     public function validarCurso()
@@ -63,7 +76,7 @@ class Curso extends ActiveRecord
             self::$alertas['error'][] = 'Estado del Curso invalido';
         }
         // Dos validaciones para la validacion del limite de alumnos
-        if ($this->limite_alumnos === 'Null')
+        if ($this->limite_alumnos == '')
         {
             $this->limite_alumnos = Null;
         }
@@ -73,7 +86,12 @@ class Curso extends ActiveRecord
             {
                 self::$alertas['error'][] = 'Limite de alumnos invalido ';
             }
-        }    
+        }
+        // Validamos el valor para el campo requisitos
+        if ($this->requisitos != 'Si'  && $this->requisitos != 'No')
+        {
+            self::$alertas['error'][] = 'Valor para requisitos invalido';
+        }
         return self::$alertas;
     }
     public static function contarPorPeriodoYRol($periodo_id, $rol, $persona_id)

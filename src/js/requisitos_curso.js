@@ -11,7 +11,7 @@
         // 2.- Inicializar Limite de Alumnos
         inicializarLimiteAlumnos();
 
-        // 3.- Inicializar 
+        // 3.- Inicializar cantidad de cursos Requeridos
         iniciarlizarCantidadCursosRequeridos();
 
         function  inicializarInscripcionAlumno()
@@ -61,15 +61,7 @@
 
                 }
             }
-            
-            function sincronizarValoresInput()
-            {
-                if (checkbox_limite_alumnos.checked) 
-                {
-                    input_hidden_cantidad_final = input_cantidad_limite_alumnos.value;
-                    console.log('Sincronizando valores de los inputs', input_hidden_cantidad_final);    
-                }
-            }
+
             // Ahora manejamos addEventListener para escuchar por cambios
             // Cuando el usuario activa o desactiva el checkbox habilitamos o desabilitamos el input visible
             checkbox_limite_alumnos.addEventListener('change', actualizarEstadoInputs);
@@ -89,37 +81,37 @@
             const checkbox_cursos_necesarios = document.querySelector('#cursos_necesarios');
             const input_cantidad_cursos_necesarios = document.querySelector('#cantidad_cursos_necesarios');
             const input_hidden_cantidad_final_cursos_necesarios = document.querySelector('#cantidad_final_cursos_necesarios');
+            const input_hidden_curso_requisitos = document.querySelector('#curso_requisitos');
 
             function actualizarEstadoInputs()
             {
                 const estaActivoOpcionCursosNecesarios = checkbox_cursos_necesarios.checked;
 
-                if (estaActivoOpcionCursosNecesarios) {
+                if (estaActivoOpcionCursosNecesarios)
+                {
                     // Si la opcion esta activa ponemos quitamos el disable del input visible
                     input_cantidad_cursos_necesarios.disabled = false;
                     // Capturamos el valor colocado en el input visible en el invisible
                     // pero si no tiene ningun valor asignamos vacio
                     input_hidden_cantidad_final_cursos_necesarios.value = input_cantidad_cursos_necesarios.value || '';
-                    console.log('Valor del input visible para la cantidad de cursos necesarios', input_cantidad_cursos_necesarios.value);
-                    console.log('Valor del input invisible para la cantidad de cursos necesarios', input_hidden_cantidad_final_cursos_necesarios.value);
-                } else {
-                    // Si no esta activo el checkbox desactivamos el input visible y asignamos vacio
-                    input_cantidad_cursos_necesarios.disabled = true;
-                    input_cantidad_cursos_necesarios.value = '';
-                    input_hidden_cantidad_final_cursos_necesarios.value = '';
-                    // En el input invisible asignamos 
 
+                    // Aqui habilitamos mandamos un si para el campo requisitos en el modelo de curso
+                    input_hidden_curso_requisitos.value = 'Si';
+                    console.log(input_hidden_curso_requisitos.value);
+
+                } 
+                else 
+                {
+                    // Si no esta activo el checkbox desactivamos el input visible y asignamos vacio a los campos
+                    input_cantidad_cursos_necesarios.disabled = true;
+                    input_hidden_cantidad_final_cursos_necesarios.value = '';
+
+                    // Aqui deshabilitamos con un no para el campo requisitos en el modelo de curso
+                    input_hidden_curso_requisitos.value = 'No';
+                    console.log(input_hidden_curso_requisitos.value);
                 }
             }
             
-            function sincronizarValoresInput()
-            {
-                if (checkbox_cursos_necesarios.checked) 
-                {
-                    input_hidden_cantidad_final_cursos_necesarios = input_cantidad_cursos_necesarios.value;
-                    console.log('Sincronizando valores de los inputs de cursos necesarios', input_hidden_cantidad_final_cursos_necesarios);    
-                }
-            }
             // Ahora manejamos addEventListener para escuchar por cambios
             // Cuando el usuario activa o desactiva el checkbox habilitamos o desabilitamos el input visible
             checkbox_cursos_necesarios.addEventListener('change', actualizarEstadoInputs);
