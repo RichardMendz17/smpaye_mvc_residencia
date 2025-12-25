@@ -162,7 +162,7 @@ class ActividadesExtraescolaresDashboardController
     public static function crear_curso(Router $router)
     {
         $curso = new Curso;
-        $curso_Requisitos = new Curso_Requisitos;
+        $curso_requisitos = new Curso_Requisitos;
         isAuth();
         $alertas = [];
         $personal = Personal::all();
@@ -194,17 +194,17 @@ class ActividadesExtraescolaresDashboardController
             if ($curso->requisitos === 'Si')
             {
                 // En caso de que la variable sea 'Si' sincronizamos datos
-                $curso_Requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
-                $curso_Requisitos->sincronizar($_POST);
+                $curso_requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
+                $curso_requisitos->sincronizar($_POST);
                 // Verificamos que sea numerico
-                if (!is_numeric($curso_Requisitos->minimo_aprobados))
+                if (!is_numeric($curso_requisitos->minimo_aprobados))
                 {
                     $alertas['error'][] = 'Coloque un minimo de actividades aprobadas necesarias para ingresar al curso';
                 }
                 // Verificamos que el valor sea como minimo mayor a 0
                 else 
                 {
-                    if ($curso_Requisitos->minimo_aprobados <= 0)
+                    if ($curso_requisitos->minimo_aprobados <= 0)
                     {
                         $alertas['error'][] = 'Cantidad de actividades aprobadas para ingresar al curso invalida';
                     }
@@ -238,9 +238,9 @@ class ActividadesExtraescolaresDashboardController
                     // Si el curso se guardo entonces verificamos si el usuario coloco requisitos
                     if ($requisitos === true) 
                     {
-                        $curso_Requisitos->id_curso = $id_registro;
-                        $curso_Requisitos->curso_excluido = $id_registro;
-                        $resultado = $curso_Requisitos->guardar();
+                        $curso_requisitos->id_curso = $id_registro;
+                        $curso_requisitos->curso_excluido = $id_registro;
+                        $resultado = $curso_requisitos->guardar();
                         if (!campoVacio($resultado))
                         {
                             //echo 'Se guardo un curso en con junto con sus requisitos';
@@ -272,7 +272,8 @@ class ActividadesExtraescolaresDashboardController
             'aulas' => $aulas,
             'tipos_curso' => $tipos_curso,
             'periodos' => $periodos,
-            'curso' => $curso
+            'curso' => $curso,
+            'curso_requisitos' => $curso_requisitos
         ]);
     }
 
@@ -441,6 +442,7 @@ class ActividadesExtraescolaresDashboardController
             // para curso
             $alertas = $curso->validarCurso();
             $alertas = array_merge($alertas, $curso_requisitos->validarCursoRequisitos());
+            debuguear($alertas);
             if(empty($alertas))
             {
                 $curso->actualizar();

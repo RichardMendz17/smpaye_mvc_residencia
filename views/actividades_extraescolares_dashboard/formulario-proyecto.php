@@ -93,7 +93,7 @@
         type="checkbox"
         id="cursos_necesarios"
         <?php
-            echo !campoVacio($curso_requisitos) && $curso_requisitos->id_curso == $curso->id ? 'checked' : '';
+            echo !empty($curso_requisitos->minimo_aprobados) ? 'checked' : '';
         ?>
     >
     <label for="cantidad_cursos_necesarios">Cantidad de Cursos Necesarios:</label>

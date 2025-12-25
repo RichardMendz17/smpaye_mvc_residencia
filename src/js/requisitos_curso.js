@@ -44,7 +44,8 @@
             {
                 const estaActivoOpcionLimiteAlumnos = checkbox_limite_alumnos.checked;
 
-                if (estaActivoOpcionLimiteAlumnos) {
+                if (estaActivoOpcionLimiteAlumnos)
+                {
                     // Si la opcion esta activa ponemos quitamos el disable del input visible
                     input_cantidad_limite_alumnos.disabled = false;
                     // Capturamos el valor colocado en el input visible en el invisible
@@ -52,7 +53,9 @@
                     input_hidden_cantidad_final.value = input_cantidad_limite_alumnos.value || '';
                     console.log('Valor del input visible para limite de alumnos', input_cantidad_limite_alumnos.value);
                     console.log('Valor del input visible para limite de alumnos', input_hidden_cantidad_final.value);
-                } else {
+                } 
+                else 
+                {
                     // Si no esta activo el checkbox desactivamos el input visible y asignamos vacio
                     input_cantidad_limite_alumnos.disabled = true;
                     input_cantidad_limite_alumnos.value = '';
