@@ -6,13 +6,14 @@
                         <thead>
                             <tr>
                                 <th>Instructor</th>
-                                <th>Actividad Extrascolar</th>
+                                <th>Actividad <br> Extraescolar</th>
                                 <th>Periodo</th>
                                 <th>Aula</th>
                                 <?php if(es_extracurricular_activities_coordinator()){ ?>
-                                <th>Registro por el alumno</th>
-                                <th>Limite de Alumnos</th>
-                                <th>Estado del Curso</th>
+                                <th>Registro <br> por el alumno</th>
+                                <th>Limite de  <br> Alumnos</th>
+                                <th>Cursos requeridos <br> para ingresar </th>
+                                <th>Estado del <br> Curso</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -29,6 +30,13 @@
                                     $limite = ($actividad_extraescolar_curso->limite_alumnos != null)  ? $actividad_extraescolar_curso->limite_alumnos
                                     : "Sin límite";
                                     echo $limite;
+                                ?> 
+                                </td>
+                                <td class="cantidad_cursos_requeridos"> 
+                                <?php  
+                                    $cantidad_cursos_requeridos = ($curso_requisitos != null)  ? $curso_requisitos->minimo_aprobados
+                                    : "No asignados";
+                                    echo $cantidad_cursos_requeridos;
                                 ?> 
                                 </td>
                                 <td class="curso_estado"> <?php echo $actividad_extraescolar_curso->estado; ?>

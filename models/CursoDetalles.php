@@ -4,9 +4,17 @@
     class CursoDetalles extends ActiveRecord {
     // Base de datos
     protected static $tabla = 'cursos';
-    protected static $columnasDB = ['id','curso_url','nombre_encargado', 'nombre_curso', 'periodo', 'nombre_Aula', 'inscripcion_alumno', 'limite_alumnos', 'estado'];
-
-
+    protected static $columnasDB = [
+        'id',
+        'curso_url',
+        'nombre_encargado',
+        'nombre_curso',
+        'periodo',
+        'nombre_Aula',
+        'inscripcion_alumno',
+        'limite_alumnos',
+        'estado'
+    ];
 
     public $id;
     public $curso_url;
@@ -18,7 +26,6 @@
     public $limite_alumnos;
     public $estado;
 
-
     public function __construct()
     {
         $this->id = $args['id'] ?? null;
@@ -26,7 +33,6 @@
         $this->nombre_curso = isset($args['nombre_curso']) ? trim($args['nombre_curso']) : '';
         $this->periodo = isset($args['periodo']) ? trim($args['periodo']) : '';
         $this->nombre_Aula = isset($args['nombre_Aula']) ? trim($args['nombre_Aula']) : '';
-        $this->curso_url = isset($args['curso_url']) ? trim($args['curso_url']) : '';
         $this->curso_url = isset($args['curso_url']) ? trim($args['curso_url']) : '';
         $this->limite_alumnos = isset($args['limite_alumnos']) ? trim($args['limite_alumnos']) : '';
         $this->estado = isset($args['estado']) ? trim($args['estado']) : '';

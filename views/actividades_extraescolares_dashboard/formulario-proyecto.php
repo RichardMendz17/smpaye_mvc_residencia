@@ -2,11 +2,11 @@
     <label for="Instructor">Instructor</label>
     <select id="Instructor" name="curso[encargado_id]">
         <option value=""> --Seleccione--</option>
-        <?php foreach ($encargados as $encargado) { ?>
+        <?php foreach ($personal as $persona) { ?>
             <option 
-                <?php echo $curso->encargado_id === $encargado->id ? 'selected' : '';?>
-                value="<?php echo s($encargado->id); ?>" >
-                <?php echo s($encargado->nombre ." ". $encargado->apellido_Paterno ); ?> 
+                <?php echo $curso->encargado_id === $persona->id ? 'selected' : '';?>
+                value="<?php echo s($persona->id); ?>" >
+                <?php echo s($persona->nombre ." ". $persona->apellido_Paterno ." ". $persona->apellido_Materno); ?> 
             </option>
         <?php } ?>
     </select>
@@ -56,23 +56,55 @@
 <hr>
 <div class="campo-checkbox">
     <label for="inscripcion">Permitir que los alumnos se inscriban</label>
-    <input type="checkbox" id="inscripcion" name="curso[inscripcion_alumno]">
+    <input 
+            type="checkbox"
+            id="inscripcion"
+            name="curso[inscripcion_alumno]" 
+            <?php echo $curso->inscripcion_alumno == 'Permitido' ? 'checked' : '';?> 
+    >
     <input type="hidden" id="inscripcion_valor" name="curso[inscripcion_alumno]">
 </div>
 <hr>
 <div class="campo-number">
     <label for="limite_alumnos">Establecer un limite de cupos para el curso</label>
-    <input type="checkbox" id="limite_alumnos">
+    <input 
+            type="checkbox"
+            id="limite_alumnos"
+        <?php
+            echo !empty($curso->limite_alumnos) && (int)$curso->limite_alumnos > 0 ? 'checked' : '';
+        ?>
+    >
+
     <label for="cantidad_limite_alumnos">Cantidad Limite de Cupos:</label>
-    <input type="number" id="cantidad_limite_alumnos" placeholder="Ej: 30">
+    <input 
+        type="number" 
+        id="cantidad_limite_alumnos" 
+        placeholder="Ej: 30"
+        <?php
+            echo !empty($curso->limite_alumnos) && (int)$curso->limite_alumnos ? 'value=' . $curso->limite_alumnos : '0';
+        ?>
+    >
     <input type="hidden" id="cantidad_final" name="curso[limite_alumnos]">
 </div>
 <hr>
 <div class="campo-number">
     <label for="cursos_necesarios">Establecer una cantidad de cursos aprobados requeridos para ingresar al curso actual</label>
-    <input type="checkbox" id="cursos_necesarios">
+    <input 
+        type="checkbox"
+        id="cursos_necesarios"
+        <?php
+            echo !campoVacio($curso_requisitos) && $curso_requisitos->id_curso == $curso->id ? 'checked' : '';
+        ?>
+    >
     <label for="cantidad_cursos_necesarios">Cantidad de Cursos Necesarios:</label>
-    <input type="number" id="cantidad_cursos_necesarios" placeholder="Ej:2">
+    <input 
+        type="number" 
+        id="cantidad_cursos_necesarios" 
+        placeholder="Ej:2"
+        <?php
+            echo !campoVacio($curso_requisitos) && $curso_requisitos->id_curso == $curso->id ? 'value=' .$curso_requisitos->minimo_aprobados : '';
+        ?>
+    >
     <input type="hidden" id="cantidad_final_cursos_necesarios" name="curso_requisitos[minimo_aprobados]">
     <input type="hidden" id="curso_requisitos" name="curso[requisitos]">
 </div>

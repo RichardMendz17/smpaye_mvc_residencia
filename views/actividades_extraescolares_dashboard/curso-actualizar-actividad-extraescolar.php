@@ -10,3 +10,7 @@
 </div>
 
 <?php  include_once __DIR__ . '/footer-actividades-extraescolares-dashboard.php' ?>
+
+<?php
+    $script .= '<script src="build/js/requisitos_curso.js"></script>';
+?>

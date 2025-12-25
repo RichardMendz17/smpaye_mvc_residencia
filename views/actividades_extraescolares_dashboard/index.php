@@ -16,7 +16,7 @@
     <?php   } else {?>
             <div class="listado-cursos">
                 <?php foreach ($cursos_actividades_extraescolares as $curso) {
-                        //debuguear($curso);
+                       // debuguear($curso);
                     ?>
                     <a href="/curso-actividades-extraescolares?id=<?php echo $curso->curso_url ?>">
                         <div class="curso">
@@ -24,6 +24,7 @@
                             <p><strong>Actividad Extraescolar:</strong> <?php echo $curso->nombre_curso; ?></p>
                             <p><strong>Periodo:</strong> <?php echo $curso->periodo; ?></p>
                             <p><strong>Aula:</strong> <?php echo $curso->nombre_Aula; ?></p>
+                            <p><strong>Inscripción libre:</strong> <?php echo $curso->inscripcion_alumno; ?></p>
                         </div>
                     </a>
                 <?php } ?>

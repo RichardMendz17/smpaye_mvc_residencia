@@ -42,7 +42,14 @@ class Curso extends ActiveRecord
         $this->aula_id = $args['aula_id'] ?? '';
         $this->encargado_id = $args['encargado_id'] ?? '';
         $this->inscripcion_alumno = $args['inscripcion_alumno'] ?? '';
-        $this->limite_alumnos = $args['limite_alumnos'] ?? '';
+        // $this->limite_alumnos = $args['limite_alumnos'] ?? '';
+        // CONVERTIR limite_alumnos a int o null
+        $limite = $args['limite_alumnos'] ?? '';
+        if ($limite === '' || $limite === null) {
+            $this->limite_alumnos = null;  // Usar null para "sin límite"
+        } else {
+            $this->limite_alumnos = (int)$limite;  // Convertir a entero
+        }
         $this->estado = $args['estado'] ?? '';
         $this->requisitos = $args['requisitos'] ?? '';
     }

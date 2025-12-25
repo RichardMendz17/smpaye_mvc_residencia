@@ -57,7 +57,7 @@ class Router
 
             // Enlace CRUD CURSO actividades extraescolaes
             '/crear-curso-actividades-extraescolares', '/curso-actividades-extraescolares', 
-            '/cursos-actualizar-actividades-extraescolares', '/curso-eliminar-actividades-extraescolares',
+            '/curso-actualizar-actividades-extraescolares', '/curso-eliminar-actividades-extraescolares',
             '/curso-actualizar-estado-actividades-extraescolares',
 
             // Enlace CRUD tipos de actividades extraescolares 
