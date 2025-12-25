@@ -104,6 +104,7 @@
                 {
                     // Si no esta activo el checkbox desactivamos el input visible y asignamos vacio a los campos
                     input_cantidad_cursos_necesarios.disabled = true;
+                    input_cantidad_cursos_necesarios.value = '';
                     input_hidden_cantidad_final_cursos_necesarios.value = '';
 
                     // Aqui deshabilitamos con un no para el campo requisitos en el modelo de curso
