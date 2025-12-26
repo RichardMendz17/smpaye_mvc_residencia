@@ -424,9 +424,9 @@ class ActividadesExtraescolaresDashboardController
         {
             $curso_requisitos = Curso_Requisitos::where('id_curso', $id);
         }
-        else
+        // Si no existe el registro lo ponemos como null
         {
-            $curso_requisitos = false;
+            $curso_requisitos = null;
         }
         $alertas = Curso::getAlertas();
         if($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -435,26 +435,96 @@ class ActividadesExtraescolaresDashboardController
             // para curso
             $args = $_POST['curso'];
             $curso->sincronizar($args);
-            // para requisitos de curso
-            $args = $_POST['curso_requisitos'];
-            $curso_requisitos->sincronizar($args);
-            // ahora validamos alertas y las metemos en el mismo array
+            // ahora validamos alertas de curso primero
             // para curso
             $alertas = $curso->validarCurso();
-            $alertas = array_merge($alertas, $curso_requisitos->validarCursoRequisitos());
-            debuguear($alertas);
+            // Si no hay alertas posteriormente validamos requisitos
             if(empty($alertas))
             {
-                $curso->actualizar();
-                $tabla = 'cursos';
-                $id_curso = $curso->id;
-                if (campoVacio($id_curso))
+                // Validamos si se van a poner requisitos
+                if ($curso->requisitos === 'Si')
                 {
-                    $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
-                    header('Location: /dashboard');
-                    //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
-                    exit;
-                } else  
+                    // Creamos el curso de requisitos
+                    $curso_requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
+                    // Validamos si es numerico
+                    if (!is_numeric($curso_requisitos->minimo_aprobados))
+                    {
+                        $alertas['error'][] = 'Coloque un minimo de actividades aprobadas necesarias para ingresar al curso';
+                    }
+                    // Verificamos que el valor sea como minimo mayor a 0
+                    else if ($curso_requisitos->minimo_aprobados <= 0)
+                    {
+                        $alertas['error'][] = 'Cantidad de actividades aprobadas para ingresar al curso invalida';
+                    }
+                    // Si no hay alertar declaramos la variable de $requisitos que posteriormente indicara que deberan registrarse los requisitos
+                    //debuguear($alertas);
+                    if (empty($alertas))
+                    {
+                        // Capturamos el id del curso
+                        $id_registro_curso = $curso->id;
+                        $requisitos = true;
+                        // Ahora buscamos si hay un registro que de requisitos para el curso
+                        $curso_requisitos_existente = Curso_Requisitos::where('id_curso', $id);
+                        // Si ya hay un registro lo traemos y actualizamos el valor de la propiedad
+                        if (!campoVacio($curso_requisitos))
+                        {
+                            //Sincronizamos valores de curso_requisitos en la propiedad de minimo_aprobados
+                            $curso_requisitos_existente->minimo_aprobados = $curso_requisitos->minimo_aprobados;
+                            
+                            $resultado = $curso_requisitos_existente->guardar();
+                            if (!campoVacio($resultado))
+                            {
+                                $curso->actualizar();
+                                $tabla = 'cursos';
+                                $id_curso = $curso->id;
+                                if (campoVacio($id_curso))
+                                {
+                                        $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
+                                        header('Location: /dashboard');
+                                        //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
+                                        exit;
+                                } 
+                                else  
+                                {
+                                    $_SESSION['mensaje_exito'] = 'El curso fue actualizado correctamente.';
+                                    $evento = new BitacoraEventos;
+                                    $evento->eventos(2, $id_curso, $tabla);
+                                    header('Location: /dashboard');
+                                    //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
+                                    exit;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Si no exite creamos el registro
+                            $curso_requisitos->id_curso = $id_registro_curso;
+                            $curso_requisitos->curso_excluido = $id_registro_curso;
+                            $curso_requisitos->guardar();
+                        }
+                        
+                    }
+                }
+                if ($curso->requisitos === 'No' ) 
+                {
+                    // Buscamos el objeto en la tabla de cursos requisitos por si existe y eliminamos el dato
+                    $curso_requisitos = Curso_Requisitos::where('id_curso', $id);
+                    if (!campoVacio($curso_requisitos))
+                    {
+                        $curso_requisitos->eliminar();
+                    }
+                    // Actualizamos curso unicamente
+                    $curso->actualizar();
+                    $tabla = 'cursos';
+                    $id_curso = $curso->id;
+                    if (campoVacio($id_curso))
+                    {
+                            $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
+                            header('Location: /dashboard');
+                            //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
+                            exit;
+                    } 
+                    else  
                     {
                         $_SESSION['mensaje_exito'] = 'El curso fue actualizado correctamente.';
                         $evento = new BitacoraEventos;
@@ -463,11 +533,12 @@ class ActividadesExtraescolaresDashboardController
                         //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
                         exit;
                     }
+                }
             }
 
         }
          $router->render('actividades_Extraescolares_dashboard/curso-actualizar-actividad-extraescolar',[
-            'curso'=>$curso,
+            'curso'=> $curso,
             'curso_requisitos' => $curso_requisitos,
             'alertas' => $alertas,
             'titulo_pagina' => 'Actualizar Curso',

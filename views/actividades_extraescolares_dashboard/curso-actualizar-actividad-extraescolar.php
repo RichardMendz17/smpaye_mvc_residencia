@@ -1,6 +1,7 @@
 <?php  include_once __DIR__ . '/header-actividades-extraescolares-dashboard.php' ?>
 
 <div class="contenedor-sm">
+        <?php include_once __DIR__  .'/../templates/alertas.php'; ?>
 
     <form method="POST" class="formulario form-actualizar"  >
         <?php include_once __DIR__ . '/formulario-proyecto.php'; ?>
