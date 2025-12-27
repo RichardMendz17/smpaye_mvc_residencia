@@ -151,7 +151,7 @@ class ActividadesExtraescolaresDashboardController
         $router->render('actividades_extraescolares_dashboard/index', [
             'titulo_pagina' => 'Cursos de Actividades Extraescolares',
             'sidebar_nav' => 'Cursos de Actividades Extraescolares',
-            'alertas'=>$alertas,        
+            'alertas'=> $alertas,        
             'cursos_actividades_extraescolares' => $cursos_actividades_extraescolares,
             'paginacion' => $paginacion->paginacion(),
             'periodos' => $periodos,
@@ -276,6 +276,65 @@ class ActividadesExtraescolaresDashboardController
             'curso_requisitos' => $curso_requisitos
         ]);
     }
+    
+    public static function importar(Router $router)
+    {
+
+        isAuth();
+        $alertas = [];
+        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $archivotmp = $_FILES['dataAlumnos']['tmp_name'];
+            $lineas     = file($archivotmp);
+
+            $i = 0;
+
+            foreach ($lineas as $linea)
+            {
+                if ($i == 0) { // Saltar encabezado
+                    $i++;
+                    continue;
+                }
+
+                $datos = str_getcsv(trim($linea), ",");
+                // Convertimos a array como si fuera $_POST
+                $datosAlumno = [
+                    'id'                   => $datos[0] ?? '',
+                    'nombre_Alumno'        => $datos[1] ?? '',
+                    'apellido_Paterno'     => $datos[2] ?? '',
+                    'apellido_Materno'     => $datos[3] ?? '',
+                    'comentarios'          => $datos[4] ?? '',
+                    'id_Carrera'           => $datos[5] ?? '',
+                    'telefono'             => $datos[6] ?? '',
+                    'correo_institucional' => $datos[7] ?? ''
+                ];
+                // Crear objeto y sincronizar
+                $alumno = new Alumno($datosAlumno);
+                $alumno->sincronizar($datosAlumno);
+
+                // Verificar si existe en DB
+                $existe = Alumno::find($alumno->id); // Método que busque por ID
+                if ($existe)
+                {
+                    $alumno->actualizar();
+                } else  {
+                            $alumno->guardarAlumno();
+                        }
+
+                        $i++;                
+
+                }
+                $_SESSION['mensaje_exito'] = 'Alumnos importados correctamente.';                    
+                header('Location: /alumnos');
+                exit;
+        }
+        
+        $router->render('/alumnos/importar-alumnos', [
+            'titulo_pagina' => 'Importar Alumnos',
+            'sidebar_nav' => 'Alumnos',
+            'alertas' => $alertas
+        ]);
+    }
 
     public static function curso(Router $router)
     {
@@ -283,6 +342,7 @@ class ActividadesExtraescolaresDashboardController
         $pagina_actual = $_GET['id'] ?? 1;
         $pagina_actual = s($pagina_actual);
         $persona_id = $_SESSION['persona_id'];
+        $alertas= [];
         if (!$pagina_actual)
         {
             header('Location: /dashboard');
@@ -351,7 +411,9 @@ class ActividadesExtraescolaresDashboardController
             'sidebar_nav' => 'Cursos de Actividades Extraescolares',         
             'actividad_extraescolar_curso' => $actividad_extraescolar_curso,
             'curso_requisitos' => $curso_requisitos,
-            'titulo' => 'Actividad Extraescolar'
+            'titulo' => 'Actividad Extraescolar',
+            'alertas' => $alertas
+
         ]);
     }
 
@@ -370,16 +432,19 @@ class ActividadesExtraescolaresDashboardController
                 if (validarTipoContenido($tipo)) 
                 {
                     $curso = Curso::find($id);
-                    // Una vez capturamos el id verificamos si a este curso se le asignaron requisitos en la tabla de
+                    // Una vez capturamos el id verificamos si a este curso se le asignaron requisitos en las sig tablas
                     // curso_requisitos
+                    // alumno_curso_detalles
+                    // horarios_clase
+                    // si tiene alguno no lo borramos hasta que vaya borrando cada uno de esos registros
                     // guardamos el id del curso encontrado
-                    $id_curso = $curso->id;
-                    $curso_Requisitos = Curso_Requisitos::where('id_curso',$id_curso);
-                    if (!campoVacio($curso_Requisitos))
-                    {
-                        // Si se encuentra un registro para cursos requisitos, lo eliminamos
-                        $curso_Requisitos->eliminar();
-                    }
+                    // $id_curso = $curso->id;
+                    // $curso_Requisitos = Curso_Requisitos::where('id_curso',$id_curso);
+                    // if (!campoVacio($curso_Requisitos))
+                    // {
+                    //     // Si se encuentra un registro para cursos requisitos, lo eliminamos
+                    //     $curso_Requisitos->eliminar();
+                    // }
                     $resultado =  $curso->eliminar();
                     if (!campoVacio($resultado))
                     {
@@ -395,7 +460,7 @@ class ActividadesExtraescolaresDashboardController
                         }                          
                     } else 
                         {
-                        $_SESSION['mensaje_error'] = 'No fue posible eliminar el curso, probablemente tenga alumno(s) asignado(s).';
+                        $_SESSION['mensaje_error'] = 'No fue posible eliminar el curso, probablemente tenga otros registros asociados, verifique con el administrador del sistema).';
                         header("Location: /dashboard");
                         exit;
                         }
@@ -420,11 +485,12 @@ class ActividadesExtraescolaresDashboardController
             header("Location: /dashboard");
         }
         // Verificamos si el curso tiene requisitos
-        if ($curso->requisitos === 'Si')
+        if($curso->requisitos === 'Si')
         {
             $curso_requisitos = Curso_Requisitos::where('id_curso', $id);
         }
         // Si no existe el registro lo ponemos como null
+        else if($curso->requisitos === 'No')
         {
             $curso_requisitos = null;
         }
@@ -446,6 +512,8 @@ class ActividadesExtraescolaresDashboardController
                 {
                     // Creamos el curso de requisitos
                     $curso_requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
+                    $curso_requisitos->sincronizar($_POST);
+
                     // Validamos si es numerico
                     if (!is_numeric($curso_requisitos->minimo_aprobados))
                     {
@@ -464,43 +532,46 @@ class ActividadesExtraescolaresDashboardController
                         $id_registro_curso = $curso->id;
                         $requisitos = true;
                         // Ahora buscamos si hay un registro que de requisitos para el curso
-                        $curso_requisitos_existente = Curso_Requisitos::where('id_curso', $id);
+                        $curso_requisitos_existente = Curso_Requisitos::where('id_curso', $id_registro_curso);
                         // Si ya hay un registro lo traemos y actualizamos el valor de la propiedad
-                        if (!campoVacio($curso_requisitos))
+                        if (!campoVacio($curso_requisitos_existente))
                         {
                             //Sincronizamos valores de curso_requisitos en la propiedad de minimo_aprobados
+                            // y guardamos el registro
                             $curso_requisitos_existente->minimo_aprobados = $curso_requisitos->minimo_aprobados;
-                            
                             $resultado = $curso_requisitos_existente->guardar();
-                            if (!campoVacio($resultado))
-                            {
-                                $curso->actualizar();
-                                $tabla = 'cursos';
-                                $id_curso = $curso->id;
-                                if (campoVacio($id_curso))
-                                {
-                                        $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
-                                        header('Location: /dashboard');
-                                        //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
-                                        exit;
-                                } 
-                                else  
-                                {
-                                    $_SESSION['mensaje_exito'] = 'El curso fue actualizado correctamente.';
-                                    $evento = new BitacoraEventos;
-                                    $evento->eventos(2, $id_curso, $tabla);
-                                    header('Location: /dashboard');
-                                    //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
-                                    exit;
-                                }
-                            }
+                            $requisitos_guardados = (!campoVacio($resultado)) ? true : false;                            
                         }
                         else
                         {
                             // Si no exite creamos el registro
                             $curso_requisitos->id_curso = $id_registro_curso;
                             $curso_requisitos->curso_excluido = $id_registro_curso;
-                            $curso_requisitos->guardar();
+                            $resultado = $curso_requisitos->guardar();
+                            $requisitos_guardados = (!campoVacio($resultado)) ? true : false;                            
+
+                        }
+                        // Si los requisitos se guardaron
+                        if ($requisitos_guardados === true)
+                        {
+                            // Actualizamos curso unicamente
+                            $curso->actualizar();
+                            $tabla = 'cursos';
+                            $id_curso = $curso->id;
+                            if (campoVacio($id_curso))
+                            {
+                                $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
+                                header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                                exit; // OBLIGATORIO para que se haga la redirección correctamente    
+                            } 
+                            else  
+                            {
+                                $_SESSION['mensaje_exito'] = 'El curso fue actualizado correctamente.';
+                                $evento = new BitacoraEventos;
+                                $evento->eventos(2, $id_curso, $tabla);
+                                header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                                exit; // OBLIGATORIO para que se haga la redirección correctamente
+                            }                        
                         }
                         
                     }
@@ -519,19 +590,17 @@ class ActividadesExtraescolaresDashboardController
                     $id_curso = $curso->id;
                     if (campoVacio($id_curso))
                     {
-                            $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
-                            header('Location: /dashboard');
-                            //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
-                            exit;
+                        $_SESSION['mensaje_error'] = 'El curso no se actualizo.';
+                        header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                        exit; // OBLIGATORIO para que se haga la redirección correctamente    
                     } 
                     else  
                     {
                         $_SESSION['mensaje_exito'] = 'El curso fue actualizado correctamente.';
                         $evento = new BitacoraEventos;
                         $evento->eventos(2, $id_curso, $tabla);
-                        header('Location: /dashboard');
-                        //header('Location: /curso-buscar?columna=docentes.id&dato=' . $curso->id);
-                        exit;
+                        header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                        exit; // OBLIGATORIO para que se haga la redirección correctamente
                     }
                 }
             }
@@ -557,7 +626,6 @@ class ActividadesExtraescolaresDashboardController
         isAuth();
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-
             //Validar id
             $id = $_POST['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -588,12 +656,13 @@ class ActividadesExtraescolaresDashboardController
                             }
                         }
                                               
-                    } else 
-                        {
+                    } 
+                    else 
+                    {
                         $_SESSION['mensaje_error'] = 'No fue posible actualizar el estado del curso, consulte con el proveedor por posibles soluciones.';
                         header("Location: /dashboard");
                         exit;
-                        }
+                    }
                 }
             }
         }

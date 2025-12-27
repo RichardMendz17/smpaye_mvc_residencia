@@ -2,6 +2,7 @@
 
     <div class="contenedor-sm">
         <?php include_once __DIR__  .'/../templates/alertas.php'; ?>
+        <a class="boton-azul-block" href="<?php echo $crear_varios;?>">Importar cursos</a>
 
         <form class="formulario" method="POST" action="/crear-curso-actividades-extraescolares" >
 

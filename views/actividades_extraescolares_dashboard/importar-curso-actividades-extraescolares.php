@@ -10,7 +10,7 @@
     <?php   include_once __DIR__ . '/../templates/alertas.php';   ?>
       <form method="POST" enctype="multipart/form-data"/>
         <div class="centrar-contenido">
-            <input  type="file" name="dataAlumnos" id="file-input" required/>
+            <input  type="file" name="dataCursos" id="file-input" required/>
             <label for="file-input"><span>. Elegir Archivo Excel</span></label >
         </div>
 

@@ -182,8 +182,6 @@ class AlumnosController {
             'alertas' => $alertas,
             'titulo_pagina' => 'Crear Alumno',
             'sidebar_nav' => 'Alumnos',
-
-
         ]);
     }
 

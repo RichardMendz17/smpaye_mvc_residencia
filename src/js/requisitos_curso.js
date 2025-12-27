@@ -100,6 +100,7 @@
 
                     // Aqui habilitamos mandamos un si para el campo requisitos en el modelo de curso
                     input_hidden_curso_requisitos.value = 'Si';
+                    console.log(input_cantidad_cursos_necesarios.value);
                     console.log(input_hidden_curso_requisitos.value);
 
                 } 
@@ -113,6 +114,8 @@
                     // Aqui deshabilitamos con un no para el campo requisitos en el modelo de curso
                     input_hidden_curso_requisitos.value = 'No';
                     console.log(input_hidden_curso_requisitos.value);
+                    console.log(input_cantidad_cursos_necesarios.value);
+
                 }
             }
             

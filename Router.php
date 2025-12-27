@@ -60,6 +60,9 @@ class Router
             '/curso-actualizar-actividades-extraescolares', '/curso-eliminar-actividades-extraescolares',
             '/curso-actualizar-estado-actividades-extraescolares',
 
+            // Importar Cursos de Actividades Extraescolares
+            '/importar-curso-actividades-extraescolares',
+
             // Enlace CRUD tipos de actividades extraescolares 
             '/tipos-curso', '/tipos-curso-crear', '/tipos-curso-actualizar', 
             '/tipos-curso-buscar', '/tipos-curso-eliminar',
@@ -69,7 +72,9 @@ class Router
             '/api/alumnos-buscar', '/api/alumnos-agregar',
 
             // Api del horario
-            '/api/horario-curso', '/api/horario-curso-agregar',  '/api/horario-curso-eliminar'
+            '/api/horario-curso', '/api/horario-curso-agregar',  '/api/horario-curso-eliminar',
+            // Ver Periodos
+            '/periodos'
         ],
 
         //-> Instructor de actividades extraescolares

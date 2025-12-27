@@ -8,5 +8,6 @@
             <h2 class="nombre-pagina"><?php echo $titulo_pagina; ?></h2>
 <?php
     $crear = '/crear-curso-actividades-extraescolares';
+    $crear_varios = '/importar-curso-actividades-extraescolares';
 ?>
     <p class="descripcion-pagina">Datos del curso</p>

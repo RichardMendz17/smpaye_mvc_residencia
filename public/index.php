@@ -82,10 +82,12 @@ $router->get('/tipos-curso-buscar', [TiposCursosController::class, 'buscar']);
 $router->post('/tipos-curso-buscar', [TiposCursosController::class, 'buscar']);
 $router->post('/tipos-curso-eliminar', [TiposCursosController::class, 'eliminar']);
 
-// Dashboard de Actividades Complementarias
+// Dashboard de Actividades Extraescolares
 $router->get('/actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'index']);
 $router->get('/crear-curso-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'crear_curso']);
 $router->post('/crear-curso-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'crear_curso']);
+$router->get('/importar-curso-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'importar_curso']);
+$router->post('/importar-curso-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'importar_curso']);
 $router->get('/curso-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'curso']);
 $router->get('/curso-actualizar-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'actualizar']);
 $router->post('/curso-actualizar-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'actualizar']);

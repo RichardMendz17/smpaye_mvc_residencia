@@ -44,6 +44,7 @@
                 { ?>
                     <a class="<?php echo ($sidebar_nav ==='Cursos de Actividades Extraescolares') ? 'activo' : ''; ?>" href="/actividades-extraescolares"> Cursos de <br> Actividades <br> Extraescolares</a>
                     <a class="<?php echo ($sidebar_nav ==='Tipos de Actividades Extraescolares') ? 'activo' : ''; ?>" href="/tipos-curso">Tipos de <br> Actividades <br>Extraescolares</a>
+                    <a class="<?php echo ($sidebar_nav ==='Periodos') ? 'activo' : ''; ?>" href="/periodos">Periodos</a>
         <?php   };?>
 
         <?php if(es_extracurricular_activities_instructor())

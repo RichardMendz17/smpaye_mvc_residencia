@@ -102,6 +102,7 @@
         id="cantidad_cursos_necesarios" 
         placeholder="Ej:2"
         <?php
+        
             echo !campoVacio($curso_requisitos) && $curso_requisitos->id_curso == $curso->id ? 'value=' .$curso_requisitos->minimo_aprobados : '';
         ?>
     >

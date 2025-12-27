@@ -3,7 +3,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Periodos</th>
+                    <th>Periodo</th>
                     <th>Año</th>
                     <?php if(es_admin() && ($crear ?? false)): ?>
                     <th>Acciones</th>
