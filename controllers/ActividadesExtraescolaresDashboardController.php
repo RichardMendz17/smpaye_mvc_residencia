@@ -276,15 +276,15 @@ class ActividadesExtraescolaresDashboardController
             'curso_requisitos' => $curso_requisitos
         ]);
     }
-    
-    public static function importar(Router $router)
+
+    public static function importar_curso(Router $router)
     {
 
         isAuth();
         $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            $archivotmp = $_FILES['dataAlumnos']['tmp_name'];
+            $archivotmp = $_FILES['dataCursos']['tmp_name'];
             $lineas     = file($archivotmp);
 
             $i = 0;
@@ -329,9 +329,9 @@ class ActividadesExtraescolaresDashboardController
                 exit;
         }
         
-        $router->render('/alumnos/importar-alumnos', [
-            'titulo_pagina' => 'Importar Alumnos',
-            'sidebar_nav' => 'Alumnos',
+        $router->render('/actividades_extraescolares_dashboard/importar-curso-actividades-extraescolares-dashboard', [
+        'titulo_pagina' => 'Importar Cursos de Actividades Extraescolares',
+        'sidebar_nav' => 'Cursos de Actividades Extraescolares',  
             'alertas' => $alertas
         ]);
     }
