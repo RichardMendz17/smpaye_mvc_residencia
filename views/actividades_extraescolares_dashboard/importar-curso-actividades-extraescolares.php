@@ -1,4 +1,4 @@
-<?php  include_once __DIR__ . '/header-alumno.php' ?>
+<?php  include_once __DIR__ . '/header-actividades-extraescolares-dashboard.php' ?>
 <h1 class="nombre-pagina">Importar Alumnos</h1>
 <p class="descripcion-pagina">Seleccione el archivo para importar cursos</p>
 
@@ -21,4 +21,4 @@
 </div>
 
 
-<?php  include_once __DIR__ . '/footer-alumno.php' ?>
+<?php  include_once __DIR__ . '/footer-actividades-extraescolares-dashboard.php' ?>

@@ -2,18 +2,19 @@
 
 namespace Controllers;
 
-use MVC\Router;
+use Model\Alumno;
 use Model\Aula;
-use Model\Usuario;
-use Model\Periodo;
-use Classes\Paginacion;
-use Model\AlumnoCursoDetalles;
-use Model\BitacoraEventos;
+use MVC\Router;
 use Model\Curso;
-use Model\Curso_Requisitos;
-use Model\CursoDetalles;
+use Model\Periodo;
+use Model\Usuario;
 use Model\Personal;
 use Model\TipoCurso;
+use Classes\Paginacion;
+use Model\CursoDetalles;
+use Model\BitacoraEventos;
+use Model\Curso_Requisitos;
+use Model\AlumnoCursoDetalles;
 
 class ActividadesExtraescolaresDashboardController 
 {
@@ -329,7 +330,7 @@ class ActividadesExtraescolaresDashboardController
                 exit;
         }
         
-        $router->render('/actividades_extraescolares_dashboard/importar-curso-actividades-extraescolares-dashboard', [
+        $router->render('actividades_extraescolares_dashboard/importar-curso-actividades-extraescolares', [
         'titulo_pagina' => 'Importar Cursos de Actividades Extraescolares',
         'sidebar_nav' => 'Cursos de Actividades Extraescolares',  
             'alertas' => $alertas
