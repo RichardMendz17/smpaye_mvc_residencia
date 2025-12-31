@@ -232,7 +232,6 @@ class ActividadesExtraescolaresDashboardController
                 // Guardar el curso
                 //debuguear($curso);
                 $resultado = $curso->guardar();
-
                 $id_registro = $resultado['id'];
                 if (!campoVacio($id_registro))
                 {
@@ -254,11 +253,11 @@ class ActividadesExtraescolaresDashboardController
                     } 
                     else
                     {
-                            $tabla = 'cursos';
-                            $evento = new BitacoraEventos;
-                            $evento->eventos(1, $id_registro, $tabla);
-                            header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
-                            exit; // OBLIGATORIO para que se haga la redirección correctamente                               
+                        $tabla = 'cursos';
+                        $evento = new BitacoraEventos;
+                        $evento->eventos(1, $id_registro, $tabla);
+                        header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                        exit; // OBLIGATORIO para que se haga la redirección correctamente                               
                     }
                 }   
             }
@@ -627,36 +626,38 @@ class ActividadesExtraescolaresDashboardController
         isAuth();
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
+            debuguear($_POST);
             //Validar id
             $id = $_POST['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);
             if(!campoVacio($id))
             {
                 $tipo = $_POST['tipo'];
-                if (validarTipoContenido($tipo)) 
+                if(validarTipoContenido($tipo)) 
                 {
                     $curso = Curso::find($id);
-                    if (!campoVacio($curso))
+                    if(!campoVacio($curso))
                     {
-                        if (!campoVacio($POST['curso']['estado'])) 
+                        if(!campoVacio($_POST['curso']['estado'])) 
                         {
-                            $nuevo_estado = $POST['curso']['estado'];
+                            $nuevo_estado = $_POST['curso']['estado'];
                             $curso->estado = $nuevo_estado;
                             $alertas = $curso->validar();
-                            if (empty($alertas)) {
+                            if(empty($alertas))
+                            {
+                                $resultado = $curso->guardar();
                                 $tabla = 'curso';
-                                $id_curso = $curso->id;
-                                if (!campoVacio($id_curso))
+                                $resultado = $resultado['resultado'];
+                                if(!campoVacio($resultado))
                                 {
-                                    $_SESSION['mensaje_exito'] = 'El curso fue eliminado correctamente.';
+                                    $_SESSION['mensaje_exito'] = 'El curso fue actualizado correctamente.';
                                     $evento = new BitacoraEventos;
-                                    $evento->eventos(3, $id_curso, $tabla);
-                                    header("Location: /dashboard");
-                                    exit;
+                                    $evento->eventos(2, $id_curso, $tabla);
+                                    header('Location: /curso-actividades-extraescolares?id=' . $curso->url);
+                                    exit; // OBLIGATORIO para que se haga la redirección correctamente
                                 }    
                             }
                         }
-                                              
                     } 
                     else 
                     {

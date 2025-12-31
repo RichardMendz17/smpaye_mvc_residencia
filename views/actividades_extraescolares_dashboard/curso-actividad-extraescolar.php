@@ -43,7 +43,10 @@
                                     echo $cantidad_cursos_requeridos;
                                 ?> 
                                 </td>
-                                <td class="curso_estado"> <?php echo $actividad_extraescolar_curso->estado; ?>
+                                <td class="curso_estado"> 
+                                    <span class="estado_actual">
+                                        <?php echo $actividad_extraescolar_curso->estado; ?>
+                                    </span>
                                     <div class="curso-dropdown">
                                         <button class="config-btn-estado">
                                             <i class="fas fa-cog"></i>
@@ -52,6 +55,8 @@
                                             <form method="POST" action="/curso-actualizar-estado-actividades-extraescolares" class="form-estado">
                                                 <input type="hidden" name="id" value="<?php echo s($actividad_extraescolar_curso->id); ?>">
                                                 <input type="hidden" name="tipo" value="curso">
+                                                <input type="hidden" name="curso[estado]" class="estado-hidden">
+
                                                 <button type="submit" name="curso[estado]" class="estado-curso" value="Creado" >Creado</button>
                                                 <button type="submit"  name="curso[estado]"  class="estado-curso" value="Abierto" >Abierto</button>
                                                 <button type="submit"  name="curso[estado]"  class="estado-curso" value="Cerrado" >Cerrado</button>
