@@ -626,7 +626,6 @@ class ActividadesExtraescolaresDashboardController
         isAuth();
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
-            debuguear($_POST);
             //Validar id
             $id = $_POST['id'];
             $id = filter_var($id, FILTER_VALIDATE_INT);

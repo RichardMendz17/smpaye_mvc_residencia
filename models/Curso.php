@@ -83,6 +83,7 @@ class Curso extends ActiveRecord
             self::$alertas['error'][] = 'Estado del Curso invalido';
         }
         // Dos validaciones para la validacion del limite de alumnos
+        // Si es vacio '' ponemos null
         if ($this->limite_alumnos == '')
         {
             $this->limite_alumnos = Null;

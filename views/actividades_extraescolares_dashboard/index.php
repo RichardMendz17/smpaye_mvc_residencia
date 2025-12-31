@@ -31,3 +31,10 @@
             </div>
             <?php }?>
 <?php  include_once __DIR__ . '/footer-actividades-extraescolares-dashboard.php' ?>
+<?php 
+if (es_student())
+{
+    $script .= '<script src="build/js/alumno_solicitar_inscripcion.js"></script>';
+
+}
+?>
