@@ -63,6 +63,9 @@ class Router
             // Importar Cursos de Actividades Extraescolares
             '/importar-curso-actividades-extraescolares',
 
+            //Configuracion del modulo de actividades extraescolares
+            '/configuracion-modulo-actividades-extraescolares',
+
             // Enlace CRUD tipos de actividades extraescolares 
             '/tipos-curso', '/tipos-curso-crear', '/tipos-curso-actualizar', 
             '/tipos-curso-buscar', '/tipos-curso-eliminar',

@@ -4,7 +4,11 @@
                 <tr>
                     <th>ID</th>
                     <th>Periodo</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Cierre</th>
                     <th>Año</th>
+                    <th>Estado</th>
+
                     <?php if(es_admin() && ($crear ?? false)): ?>
                     <th>Acciones</th>
                     <?php endif; ?>
@@ -15,7 +19,10 @@
                 <tr>
                     <td> <?php echo $periodo->id;?> </td>
                     <td class="meses"> <?php echo $periodo->meses_Periodo;?> </td>
+                    <td class="fecha_inicio"> <?php echo $periodo->fecha_inicio;?> </td>
+                    <td class="fecha_fin"> <?php echo $periodo->fecha_fin;?> </td>
                     <td class="year"> <?php echo $periodo->year;?> </td>
+                    <td class="estado"> <?php echo $periodo->estado;?> </td>
                     <?php if(es_admin() && ($crear ?? false)){  ?>
                     <td class="acciones-crud">
                         <a href="/periodos-actualizar?id=<?php echo s($periodo->id); ?>" 

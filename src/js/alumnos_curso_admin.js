@@ -81,27 +81,27 @@
             const estado_hidden = document.querySelector('.estado-hidden');
             estado_hidden.value = nuevo_estado;
            Swal.fire({
-                title: "¿Desea actualizar el estado del curso este curso?",
-                html: `      
-                <p><strong>Estado Actual:</strong> ${estado_actual}</p>
-                <p><strong>Nuevo Estado:</strong> ${nuevo_estado}</p>`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Confirmar",
-                cancelButtonText: 'Cancelar',
-                confirmButtonColor: '#0891B2',
-                cancelButtonColor: '#3085d6'
-            }).then((result) => {
-    if (result.isConfirmed) {
-        // Aquí sí buscas el form desde el botón
-        const form = btn.closest("form");
-        if (form) {
-          form.submit();
-        } else {
-          console.error("No se encontró el formulario para enviar.");
-        }
-      }
-            });
+                        title: "¿Desea actualizar el estado del curso este curso?",
+                        html: `      
+                        <p><strong>Estado Actual:</strong> ${estado_actual}</p>
+                        <p><strong>Nuevo Estado:</strong> ${nuevo_estado}</p>`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: "Confirmar",
+                        cancelButtonText: 'Cancelar',
+                        confirmButtonColor: '#0891B2',
+                        cancelButtonColor: '#3085d6'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Aquí sí buscas el form desde el botón
+                        const form = btn.closest("form");
+                        if (form) {
+                        form.submit();
+                        } else {
+                        console.error("No se encontró el formulario para enviar.");
+                        }
+                    }
+                });
 
             });
         });

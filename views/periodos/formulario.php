@@ -21,3 +21,32 @@
     />
 </div>
 
+<div class="campo">
+    <label for="estado">Estado</label>
+    <select name="periodo[estado]" id="estado">
+        <option value=""> --Seleccione--</option>
+        <option <?php echo ($periodo->estado === 'Activo') ? 'selected' : '' ?> value="Activo">Activo</option>
+        <option <?php echo ($periodo->estado === 'Suspendido') ? 'selected' : '' ?>value="Suspendido">Suspendido</option>
+        <option <?php echo ($periodo->estado === 'Cerrado') ? 'selected' : '' ?>value="Cerrado">Cerrado</option>
+    </select>
+</div>
+
+<div class="campo">
+    <label for="fecha_inicio">Fecha inicio del periodo</label>
+    <input
+        type="date"
+        id="fecha_inicio"
+        name="periodo[fecha_inicio]"
+        value="<?php echo s($periodo->fecha_inicio); ?>"
+    />
+</div>
+
+<div class="campo">
+    <label for="fecha_fin">Fecha fin del periodo</label>
+    <input
+        type="date"
+        id="fecha_fin"
+        name="periodo[fecha_fin]"
+        value="<?php echo s($periodo->fecha_fin); ?>"
+    />
+</div>

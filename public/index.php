@@ -93,6 +93,8 @@ $router->get('/curso-actualizar-actividades-extraescolares', [ActividadesExtraes
 $router->post('/curso-actualizar-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'actualizar']);
 $router->post('/curso-actualizar-estado-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'actualizar_estado_curso']);
 $router->post('/curso-eliminar-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'eliminar_Curso']);
+$router->get('/configuracion-modulo-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'configuracion_modulo']);
+$router->post('/configuracion-modulo-actividades-extraescolares', [ActividadesExtraescolaresDashboardController::class, 'configuracion_modulo']);
 
 //// CRUD de tipos de actividades extraescolares
 $router->get('/tipos-actividades-extraescolares', [TiposCursosController::class, 'index']);

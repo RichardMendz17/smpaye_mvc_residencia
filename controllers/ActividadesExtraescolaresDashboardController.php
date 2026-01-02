@@ -35,7 +35,7 @@ class ActividadesExtraescolaresDashboardController
                 case 3: // Admin
                     $periodo_reciente = Periodo::SQL("SELECT id FROM periodos ORDER BY year DESC, meses_Periodo DESC LIMIT 1");
                 break;
-                case 4: // Docente
+                case 4: // Instructor de Actividades Extraescolares
                     $periodo_reciente = Periodo::SQL("
                         SELECT periodos.id
                         FROM periodos
@@ -166,7 +166,14 @@ class ActividadesExtraescolaresDashboardController
         $curso_requisitos = new Curso_Requisitos;
         isAuth();
         $alertas = [];
-        $personal = Personal::all();
+        // Ahora necesitamos traernos al personal que tenga el rol de instructor de Actividades extraescolares segun este modulo
+        // Construimos la consulta base
+        $query_base  = "SELECT personal.id, personal.nombre, personal.apellido_Paterno, personal.apellido_Materno, personal.genero FROM personal ";
+        $query_base .= "LEFT OUTER JOIN asignacion_roles ON asignacion_roles.id_personal = personal.id ";
+        // El id del rol que pertenece a Instructor de actividades extraescolares es:
+        // 4
+        $query_base .= "WHERE asignacion_roles.id_rol = 4";
+        $personal = Personal::SQL($query_base);
         $aulas = Aula::all();
         // Debido a que cada modulo gestionara sus propios tipos de cursos vamos a realizar una consulta filtrando los registros
         // de la tabla de tipos de cursos por modulo_id en base ala siguiente informacion
@@ -752,5 +759,15 @@ class ActividadesExtraescolaresDashboardController
             'alertas' => $alertas
         ]);
     } 
+
+    public static function configuracion_modulo(Router $router)
+    {
+        
+        $router->render('actividades_extraescolares_dashboard/configuracion-modulo-actividades-extraescolares', [
+            'titulo_pagina' => 'Configuracion del modulo de actividades extraescolares',
+            'sidebar_nav' => 'Configuracion Modulo',     
+
+        ]);
+    }
 }
 ?>

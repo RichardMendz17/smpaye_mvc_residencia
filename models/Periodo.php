@@ -5,11 +5,14 @@
 
     // Base de datos
     protected static $tabla = 'periodos';
-    protected static  $columnasDB = ['id', 'meses_Periodo', 'year'];
+    protected static  $columnasDB = ['id', 'meses_Periodo', 'year', 'estado', 'fecha_inicio', 'fecha_fin'];
 
     public $id;
     public $meses_Periodo;
     public $year;
+    public $estado;
+    public $fecha_inicio;
+    public $fecha_fin;
 
         
     public function __construct($args = [])
@@ -17,6 +20,9 @@
         $this->id = $args['id'] ?? null;
         $this->meses_Periodo = isset($args['meses_Periodo']) ? trim($args['meses_Periodo']) : '';
         $this->year = isset($args['year']) ? trim($args['year']) : '';
+        $this->estado = isset($args['estado']) ? trim($args['estado']) : '';
+        $this->fecha_inicio = isset($args['fecha_inicio']) ? trim($args['fecha_inicio']) : '';
+        $this->fecha_fin = isset($args['fecha_fin']) ? trim($args['fecha_fin']) : '';
 
     } 
 
@@ -27,7 +33,23 @@
         }
         if(!$this->year){
             self::$alertas['error'][] = 'El Año del periodo es obligatorio';
-        }        
+        }
+        if(!$this->estado){
+            self::$alertas['error'][] = 'El Estado del periodo es obligatorio';
+        }    
+        if(!$this->fecha_inicio){
+            self::$alertas['error'][] = 'La fecha de inicio del periodo es obligatorio';
+        }    
+        if(!$this->fecha_fin){
+            self::$alertas['error'][] = 'La fecha de fin del periodo es obligatorio';
+        }
+        if ($this->fecha_inicio && $this->fecha_fin)
+        {
+            if ($this->fecha_inicio > $this->fecha_fin) 
+            {
+                self::$alertas['error'][] = 'La fecha de inicio no puede ser despues que la fecha final';
+            }
+        }
         return self::$alertas;
     }
 
