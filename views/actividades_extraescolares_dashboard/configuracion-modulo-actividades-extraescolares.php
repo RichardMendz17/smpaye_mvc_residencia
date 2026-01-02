@@ -1,56 +1,61 @@
 <?php  include_once __DIR__ . '/header-actividades-extraescolares-dashboard.php' ?>
 
 <div class="contenedor-sm">
-    <?php include_once __DIR__ . '/../templates/alertas.php'; ?>
-    <div class="enlace-perfil">
-        <a href="/cambiar-password" class="enlace">Cambiar Password</a>
-    </div>
+    <p>La Configuracion corresponde al periodo activo de:</p>
+
+    <?php 
+        include_once __DIR__ . '/../templates/alertas.php'; 
+        include_once __DIR__ . '/../templates/barra_opciones.php';
+    ?>
 
     
     <form class="formulario" method="POST" action="/perfil">
-        <div class="campo campo-automatico">
-            <label for="nombre">Nombre</label>
+        <div class="campo-number">
+            <label for="limite_cursos">Asignar una cantidad de cursos limite a los que el alumno puede inscribirse</label>
             <input 
-                type="text"
-                value="<?php echo $_SESSION['nombre']; ?>"
-                name="nombre"
-                placeholder="Tu Email"
-                disabled
-            />
-        </div>        
-        <div class="campo campo-automatico">
-            <label for="email">Email</label>
+                    type="checkbox"
+                    id="limite_cursos"
+                <?php
+                    echo !empty($periodo->limite_alumnos) && (int)$curso->limite_alumnos > 0 ? 'checked' : '';
+                ?>
+            >
+
+            <label for="cantidad_limite_alumnos">Cantidad Limite de Cursos para registrarse:</label>
             <input 
-                type="text"
-                value="<?php echo $usuario->email; ?>"
-                name="email"
-                placeholder="Tu Email"
-                disabled
-            />
+                type="number" 
+                id="cantidad_limite_alumnos" 
+                placeholder="Ej: 30"
+                <?php
+                    echo !empty($curso->limite_alumnos) && (int)$curso->limite_alumnos ? 'value=' . $curso->limite_alumnos : '0';
+                ?>
+            >
+            <input type="hidden" id="cantidad_final" name="curso[limite_alumnos]">
         </div>
-        <div class="campo campo-automatico">
-            <label for="email">Rol</label>
+        <hr>    
+        <div class="campo-number">
+            <label for="fecha_limite">Asignar una  fecha limite para que el alumno pueda inscribirse a algun curso</label>
             <input 
-                type="text"
-                value="<?php echo $_SESSION['tipo_Usuario']; ?>"
-                name="email"
-                placeholder="Tu Email"
-                disabled                
-            />
-        </div>
-            <div class="campo campo-automatico">
-            <label for="email">Número de Control</label>
+                    type="checkbox"
+                    id="fecha_limite"
+                <?php
+                    echo !empty($curso->limite_alumnos) && (int)$curso->limite_alumnos > 0 ? 'checked' : '';
+                ?>
+            >
+
+            <label for="cantidad_limite_alumnos">Fecha Limite para registrarse en cursos:</label>
             <input 
-                type="text"
-                value="<?php echo $_SESSION['persona_id']; ?>"
-                name="email"
-                placeholder="Tu Email"
-                disabled                
-            />
+                type="number" 
+                id="cantidad_limite_alumnos" 
+                placeholder="Ej: 30"
+                <?php
+                    echo !empty($curso->limite_alumnos) && (int)$curso->limite_alumnos ? 'value=' . $curso->limite_alumnos : '0';
+                ?>
+            >
+            <input type="hidden" id="cantidad_final" name="curso[limite_alumnos]">
         </div>
-        <?php if(es_admin()):?>
+        <hr>
+        <?php if(es_admin() || es_extracurricular_activities_coordinator()):?>
             <input type="submit" value="Guardar Cambios">
-            <p>Opción no válida</p>
         <?php endif;?>
     </form>
 </div>

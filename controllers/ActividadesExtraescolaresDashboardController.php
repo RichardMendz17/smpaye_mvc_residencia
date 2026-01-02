@@ -146,8 +146,12 @@ class ActividadesExtraescolaresDashboardController
         // Consulta paginada
         $query = $query_base . $where . " ORDER BY periodos.year DESC, periodos.meses_Periodo DESC ";
         $query .= " LIMIT {$registros_por_pagina} OFFSET {$paginacion->offset()}";
+
         // Obtenemos el total de los cursos por periodos
         $cursos_actividades_extraescolares = CursoDetalles::SQL($query);
+
+        // Agregamos los enalces para crear el curso 
+        $crear = '/crear-curso-actividades-extraescolares';
 
         $router->render('actividades_extraescolares_dashboard/index', [
             'titulo_pagina' => 'Cursos de Actividades Extraescolares',
@@ -156,12 +160,16 @@ class ActividadesExtraescolaresDashboardController
             'cursos_actividades_extraescolares' => $cursos_actividades_extraescolares,
             'paginacion' => $paginacion->paginacion(),
             'periodos' => $periodos,
-            'periodo_seleccionado' => $periodo_id
+            'periodo_seleccionado' => $periodo_id,
+            'crear' => $crear
         ]);
     }
 
     public static function crear_curso(Router $router)
     {
+        // agregamos el enlace para importar cursos
+        $crear_varios = '/importar-curso-actividades-extraescolares';
+
         $curso = new Curso;
         $curso_requisitos = new Curso_Requisitos;
         isAuth();
@@ -280,13 +288,13 @@ class ActividadesExtraescolaresDashboardController
             'tipos_curso' => $tipos_curso,
             'periodos' => $periodos,
             'curso' => $curso,
-            'curso_requisitos' => $curso_requisitos
+            'curso_requisitos' => $curso_requisitos,
+            'crear_varios' => $crear_varios
         ]);
     }
 
     public static function importar_curso(Router $router)
     {
-
         isAuth();
         $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -336,10 +344,15 @@ class ActividadesExtraescolaresDashboardController
                 exit;
         }
         
+
+        // Agregamos los enalces para crear el curso 
+        $crear = '/crear-curso-actividades-extraescolares';
+
         $router->render('actividades_extraescolares_dashboard/importar-curso-actividades-extraescolares', [
         'titulo_pagina' => 'Importar Cursos de Actividades Extraescolares',
         'sidebar_nav' => 'Cursos de Actividades Extraescolares',  
-            'alertas' => $alertas
+            'alertas' => $alertas,
+            'crear' => $crear
         ]);
     }
 
@@ -762,10 +775,19 @@ class ActividadesExtraescolaresDashboardController
 
     public static function configuracion_modulo(Router $router)
     {
-        
+        $alertas = [];
+        // Primero vamos a traernos los periodos activos
+        // Construimos la consulta base
+        $query_base  = "SELECT personal.id, personal.nombre, personal.apellido_Paterno, personal.apellido_Materno, personal.genero FROM personal ";
+        $query_base .= "LEFT OUTER JOIN asignacion_roles ON asignacion_roles.id_personal = personal.id ";
+        // El id del rol que pertenece a Instructor de actividades extraescolares es:
+        // 4
+        $query_base .= "WHERE asignacion_roles.id_rol = 4";
+        $personal = Personal::SQL($query_base);
         $router->render('actividades_extraescolares_dashboard/configuracion-modulo-actividades-extraescolares', [
             'titulo_pagina' => 'Configuracion del modulo de actividades extraescolares',
-            'sidebar_nav' => 'Configuracion Modulo',     
+            'sidebar_nav' => 'Configuracion Modulo',
+            'alertas' => $alertas
 
         ]);
     }
