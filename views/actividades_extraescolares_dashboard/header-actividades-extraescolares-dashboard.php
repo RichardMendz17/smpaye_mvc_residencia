@@ -7,4 +7,3 @@
         <div class="contenido">
             <h2 class="nombre-pagina"><?php echo $titulo_pagina; ?></h2>
 
-    <p class="descripcion-pagina">Datos del curso</p>

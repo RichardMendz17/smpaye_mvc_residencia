@@ -2,6 +2,7 @@
     include_once __DIR__ . '/header-actividades-extraescolares-dashboard.php';
     include_once __DIR__ . '/../templates/alertas.php'; 
 ?>
+    <p class="descripcion-pagina">Datos del curso</p>
     <div class="contenedor-95">
             <div class="detalles-curso">
                 <div class="informacion-curso">

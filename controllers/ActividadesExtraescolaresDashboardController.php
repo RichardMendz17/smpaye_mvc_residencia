@@ -15,6 +15,7 @@ use Model\CursoDetalles;
 use Model\BitacoraEventos;
 use Model\Curso_Requisitos;
 use Model\AlumnoCursoDetalles;
+use Model\ConfiguracionModuloPorPeriodo;
 
 class ActividadesExtraescolaresDashboardController 
 {
@@ -777,17 +778,49 @@ class ActividadesExtraescolaresDashboardController
     {
         $alertas = [];
         // Primero vamos a traernos los periodos activos
+        // Seran capturados en la url como periodo_id
+        $periodo_id = $_GET['periodo_id'] ?? null;
+        // Si no hay periodo aplicamos un if para validarlo y aplicarlo
+        if ($periodo_id === false || $periodo_id === null)
+        {
+            $periodo_reciente = Periodo::SQL("SELECT periodos.id, periodos.meses_Periodo, periodos.year, periodos.estado, periodos.fecha_inicio, periodos.fecha_fin FROM periodos ");
+            $periodo_id = $periodo_reciente[0]->id ?? 1;
+            header("Location: /configuracion-modulo-actividades-extraescolares?periodo_id={$periodo_id}&page=1");
+            exit;
+        }
+        // Obtenemos la pagina actual
+        $pagina_actual = $_GET['page'] ?? 1;
+        $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
+        // Validamos que la pagina no sea menor a 1 o no exista
+        if (!$pagina_actual || $pagina_actual < 1)
+        {
+            header("Location: /configuracion-modulo-actividades-extraescolares?periodo_id={$periodo_id}&page=1");
+            exit;
+        }
         // Construimos la consulta base
-        $query_base  = "SELECT personal.id, personal.nombre, personal.apellido_Paterno, personal.apellido_Materno, personal.genero FROM personal ";
-        $query_base .= "LEFT OUTER JOIN asignacion_roles ON asignacion_roles.id_personal = personal.id ";
-        // El id del rol que pertenece a Instructor de actividades extraescolares es:
-        // 4
-        $query_base .= "WHERE asignacion_roles.id_rol = 4";
-        $personal = Personal::SQL($query_base);
+        $query_base  = "SELECT periodos.id, periodos.meses_Periodo, periodos.year, periodos.estado, periodos.fecha_inicio, periodos.fecha_fin ";
+        $query_base .= "FROM periodos ";
+        // donde el estado del periodo sea activo
+        $query_base .= "WHERE periodos.estado = 'Activo'";
+        // Aplicamos filtro de periodo (obligatorio)
+        $query_base .= " AND periodos.id = {$periodo_id} ";
+        $periodo = Periodo::SQL($query_base);
+        // Ahora necesitamos traernos el registro de configuracion de modulo en el periodo activo
+        $configuracion_modulo_por_periodo = ConfiguracionModuloPorPeriodo::where('id_periodo', $periodo_id);
+        if (campoVacio($configuracion_modulo_por_periodo)) 
+        {
+            // Si no hay registro se crea un nuevo objeto 
+            $configuracion_modulo_por_periodo = new ConfiguracionModuloPorPeriodo();
+        }
         $router->render('actividades_extraescolares_dashboard/configuracion-modulo-actividades-extraescolares', [
             'titulo_pagina' => 'Configuracion del modulo de actividades extraescolares',
             'sidebar_nav' => 'Configuracion Modulo',
-            'alertas' => $alertas
+            'alertas' => $alertas,
+            // Ya que estamos utilizando un template que se usa en el index de este modulo dejaremos
+            // que la variable de $periodo pase ala vista como periodos y evitar conflictos
+            'periodos' => $periodo,
+            'periodo_seleccionado' => $periodo_id,
+            'configuracion_modulo_por_periodo' => $configuracion_modulo_por_periodo
 
         ]);
     }

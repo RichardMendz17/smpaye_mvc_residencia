@@ -47,6 +47,7 @@ class PeriodosController {
 
     public static function crear(Router $router)
     {
+        // Cada que se cree un nuevo per
         $alertas = [];
         isAuth();
 

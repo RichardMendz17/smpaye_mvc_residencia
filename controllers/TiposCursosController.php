@@ -48,7 +48,7 @@ class TiposCursosController {
                 $modulo_id = '6';
                 $query .= " WHERE modulos.id = $modulo_id";
                 $query_total_tipos_cursos = "SELECT * FROM tipos_curso WHERE modulo_id = $modulo_id ";
-
+                $sidevar_nav = 'Tipos de Actividades Extraescolares';
                 $total = TipoCurso::contarConFiltros($query_total_tipos_cursos);
                 break;
             case 5:
@@ -85,7 +85,7 @@ class TiposCursosController {
         $alertas = TipoCurso::getAlertas();        
         $router->render('tipos-curso/index', [
             'titulo_pagina' => 'Tipos de Cursos',
-            'sidebar_nav' => 'Tipos Curso',            
+            'sidebar_nav' => $sidevar_nav,            
             'tipos_curso'=>$tipos_curso_detalles,
             'alertas'=>$alertas,
             'paginacion' => $paginacion->paginacion()            

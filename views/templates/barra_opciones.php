@@ -15,7 +15,9 @@ if ($sidebar_nav === 'Ingles' || $sidebar_nav === 'Cursos de Actividades Extraes
             <label for="periodo_id">Periodo:</label>
             <select name="periodo_id" id="periodo_id" onchange="this.form.submit()">
                 <?php foreach ($periodos as $periodo): ?>
-                    <option value="<?= $periodo->id ?>" <?= $periodo->id == $periodo_seleccionado ? 'selected' : '' ?>>
+                    <option value="<?= $periodo->id ?>" 
+                        <?= $periodo->id == $periodo_seleccionado ? 'selected' : '' ?> 
+                    >
                         <?= $periodo->meses_Periodo ?> <?= $periodo->year ?>
                     </option>
                 <?php endforeach; ?>
