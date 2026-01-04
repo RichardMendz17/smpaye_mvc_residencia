@@ -13,7 +13,7 @@ if ($sidebar_nav === 'Ingles' || $sidebar_nav === 'Cursos de Actividades Extraes
     <div class="periodos-id">
         <form id="form-periodo" method="GET">
             <label for="periodo_id">Periodo:</label>
-            <select name="periodo_id" id="periodo_id" onchange="this.form.submit()">
+                <select name="periodo_id" id="periodo_id" onchange="this.form.submit()">
                 <?php foreach ($periodos as $periodo): ?>
                     <option value="<?= $periodo->id ?>" 
                         <?= $periodo->id == $periodo_seleccionado ? 'selected' : '' ?> 

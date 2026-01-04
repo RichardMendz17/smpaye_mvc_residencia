@@ -107,7 +107,7 @@
         ?>
     >
     <input type="hidden" id="cantidad_final_cursos_necesarios" name="curso_requisitos[minimo_aprobados]">
-    <input type="hidden" id="curso_requisitos" name="curso[requisitos]">
+    <input type="hidden" id="cantidad_final_cursos_necesarios" name="curso_requisitos[id_periodo]">
 </div>
 <hr>
 <input type="hidden" name="curso[estado]" value="Creado">

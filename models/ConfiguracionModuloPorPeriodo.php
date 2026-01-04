@@ -22,7 +22,6 @@
         $this->id_periodo = isset($args['id_periodo']) ? trim($args['id_periodo']) : '';
         $this->maximo_cursos_por_periodo = isset($args['maximo_cursos_por_periodo']) ? trim($args['maximo_cursos_por_periodo']) : '';
         $this->fecha_limite_inscripcion = isset($args['fecha_limite_inscripcion']) ? trim($args['fecha_limite_inscripcion']) : '';
-
     }
 
     public function validar(){

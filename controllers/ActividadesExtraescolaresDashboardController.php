@@ -33,7 +33,7 @@ class ActividadesExtraescolaresDashboardController
         if ($periodo_id === false || $periodo_id === null)
         {
             switch ($rol) {
-                case 3: // Admin
+                case 3: // Coordinador de Actividades Extraescolares
                     $periodo_reciente = Periodo::SQL("SELECT id FROM periodos ORDER BY year DESC, meses_Periodo DESC LIMIT 1");
                 break;
                 case 4: // Instructor de Actividades Extraescolares
@@ -202,8 +202,7 @@ class ActividadesExtraescolaresDashboardController
         if($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             // Creamos los objetos
-            $curso = new Curso($_POST['curso']);
-
+            $curso = new Curso($_POST['curso']);            
             // Sincronizamos objeto de curso
             $curso->sincronizar($_POST);
 
@@ -811,6 +810,21 @@ class ActividadesExtraescolaresDashboardController
         {
             // Si no hay registro se crea un nuevo objeto 
             $configuracion_modulo_por_periodo = new ConfiguracionModuloPorPeriodo();
+        }
+        if($_SERVER['REQUEST_METHOD'] === 'POST') 
+        {
+            // Creamos el objeto
+            $configuracion_modulo_por_periodo = new ConfiguracionModuloPorPeriodo($_POST['configuracion_modulo_periodo']);
+            // planeaba enviar el id del modulo desde el form pero es mas seguro asignarlo aqui
+
+            // Sincronizamos los valores posteados
+            $configuracion_modulo_por_periodo->sincronizar($_POST);
+            $configuracion_modulo_por_periodo->id_modulo = 6;
+            
+            // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion para llamar alas respectivas funciones 
+            // dichas funciones estan en el objeto
+            debuguear($configuracion_modulo_por_periodo);
+
         }
         $router->render('actividades_extraescolares_dashboard/configuracion-modulo-actividades-extraescolares', [
             'titulo_pagina' => 'Configuracion del modulo de actividades extraescolares',

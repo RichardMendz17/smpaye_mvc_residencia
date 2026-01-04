@@ -9,7 +9,7 @@
         include_once __DIR__ . '/../templates/barra_opciones.php';
     ?>
 
-    <form class="formulario" method="POST" action="/configuracion-modulo-actividades-extraescolares">
+    <form class="formulario" method="POST" >
         <div class="campo-number">
             <label for="limite_cursos_por_periodo">Asignar una cantidad de cursos limite a los que el alumno puede inscribirse</label>
             <input 
@@ -53,11 +53,17 @@
                 ?>
             >
             <input type="hidden" id="fecha_limite_inscripcion_final" name="configuracion_modulo_periodo[fecha_limite_inscripcion]">
+            <input 
+            type="hidden" 
+            id="configuracion_modulo_periodo_id" 
+            name="configuracion_modulo_periodo[id_periodo]"
+            <?php
+                echo !empty($periodo_seleccionado) ? 'value=' . $periodo_seleccionado : '0';
+            ?>
+            >
         </div>
     <hr>
-        <?php if(es_admin() || es_extracurricular_activities_coordinator()):?>
-            <input type="submit" value="Guardar Cambios">
-        <?php endif;?>
+            <input type="submit" value="Guardar Configuracion Modulo">
     </form>
 </div>
 

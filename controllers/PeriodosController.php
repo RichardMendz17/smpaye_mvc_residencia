@@ -12,6 +12,7 @@ class PeriodosController {
     {
         $alertas = [];
         isAuth();
+        $rol = $_SESSION['rol'];
 
         // Obtenemos la pagina actual
         $pagina_actual = $_GET['page'] ?? 1;
@@ -34,14 +35,28 @@ class PeriodosController {
         $paginacion = new Paginacion($pagina_actual, $registros_por_pagina, $total);
 
         $periodos = Periodo::paginar($registros_por_pagina, $paginacion->offset());
+            switch ($rol) {
+                case 0: // Admin
+                    $crear = '/periodos-crear';
+                    $buscar = '/periodos-buscar';
+                break;
+                default: // Admin
+                    $crear = null;
+                    $buscar =null ;
+                break;
+            }
 
-        $alertas = Periodo::getAlertas();        
+
+    
+    $alertas = Periodo::getAlertas();        
         $router->render('periodos/index', [
             'titulo_pagina' => 'Periodos',
             'sidebar_nav' => 'Periodos',              
             'periodos'=>$periodos,
             'alertas'=>$alertas,
-            'paginacion' => $paginacion->paginacion()          
+            'paginacion' => $paginacion->paginacion(),
+            'crear' => $crear,
+            'buscar'=> $buscar       
         ]);
     }
 

@@ -6,8 +6,4 @@
 
         <div class="contenido">
             <h2 class="nombre-pagina"><?php echo $sidebar_nav; ?></h2>
-<?php
-    $crear = '/periodos-crear';
-    $buscar = '/periodos-buscar';
-    
-?>
+
