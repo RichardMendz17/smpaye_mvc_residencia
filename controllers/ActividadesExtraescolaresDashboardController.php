@@ -820,10 +820,25 @@ class ActividadesExtraescolaresDashboardController
             // Sincronizamos los valores posteados
             $configuracion_modulo_por_periodo->sincronizar($_POST);
             $configuracion_modulo_por_periodo->id_modulo = 6;
-            
+
             // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion para llamar alas respectivas funciones 
             // dichas funciones estan en el objeto
-            debuguear($configuracion_modulo_por_periodo);
+            // Acederemos a cada una de la propiedad y en base a la propiedad aplicaremos la verificacion
+            // la verificacion son funciones propias en el modelo de ConfiguracionModuloPorPeriodo
+            if (!campoVacio($configuracion_modulo_por_periodo->maximo_cursos_por_periodo))
+            {
+                $alertas = $configuracion_modulo_por_periodo->validarMaximoCursosPorPeriodo();
+            } 
+            if(!campoVacio($configuracion_modulo_por_periodo->fecha_limite_inscripcion))
+            {   // Mezclamos el array de alertas
+                $alertas = array_merge($alertas, $configuracion_modulo_por_periodo->validarFechaLimiteDeInscripcion());
+            }
+            //debuguear($configuracion_modulo_por_periodo);
+            if ($alertas)
+            {
+                // Si no hay alertas, ahora debemos de validar la fecha que sea entre la fecha de inicio del periodo
+                // y fin del periodo para eso debemos traernos el periodo
+            }
 
         }
         $router->render('actividades_extraescolares_dashboard/configuracion-modulo-actividades-extraescolares', [

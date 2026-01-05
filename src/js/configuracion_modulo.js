@@ -62,17 +62,17 @@
 
             function actualizarEstadoInputs()
             {
-                const estaActivoOpcionLimiteAlumnos = checkbox_fecha_limite_inscripcion.checked;
+                const estaActivoOpcionFechaLimiteInscripcion = checkbox_fecha_limite_inscripcion.checked;
 
-                if (estaActivoOpcionLimiteAlumnos)
+                if (estaActivoOpcionFechaLimiteInscripcion)
                 {
                     // Si la opcion esta activa ponemos quitamos el disable del input visible
                     input_fecha_limite_inscripcion.disabled = false;
                     // Capturamos el valor colocado en el input visible en el invisible
                     // pero si no tiene ningun valor asignamos vacio
-                    input_hidden_fecha_limite_inscripcion.value = input_fecha_limite_inscripcion.value || 0;
-                    console.log('Valor del input visible para limite de alumnos', input_fecha_limite_inscripcion.value);
-                    console.log('Valor del input invisible para el limite de alumnos', input_hidden_fecha_limite_inscripcion.value);
+                    input_hidden_fecha_limite_inscripcion.value = input_fecha_limite_inscripcion.value || 'null';
+                    console.log('Valor del input visible para la fecha limite de inscripcion', input_fecha_limite_inscripcion.value);
+                    console.log('Valor del input invisible para la fecha limite de inscripcion', input_hidden_fecha_limite_inscripcion.value);
                 } 
                 else 
                 {
