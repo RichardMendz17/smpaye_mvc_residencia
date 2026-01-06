@@ -36,7 +36,9 @@
                     // Si no esta activo el checkbox desactivamos el input visible y asignamos vacio
                     input_cantidad_limite_cursos.disabled = true;
                     input_cantidad_limite_cursos.value = '';
-                    input_hidden_cantidad_final_cursos_periodo.value = '';
+                    input_hidden_cantidad_final_cursos_periodo.value = null;
+                    console.log('Valor del input invisible para el limite de cursos cuando el checkbox no esta activado', input_hidden_cantidad_final_cursos_periodo.value);
+
                     // En el input invisible asignamos 
 
                 }

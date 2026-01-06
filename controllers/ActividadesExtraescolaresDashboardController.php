@@ -805,7 +805,12 @@ class ActividadesExtraescolaresDashboardController
         // $query_base .= " AND periodos.id = {$periodo_id} ";
         $periodo = Periodo::SQL($query_base);
         // Ahora necesitamos traernos el registro de configuracion de modulo en el periodo activo
-        $configuracion_modulo_por_periodo = ConfiguracionModuloPorPeriodo::where('id_periodo', $periodo_id);
+        $configuracion_modulo_por_periodo = ConfiguracionModuloPorPeriodo::buscarPorMultiples(
+            ['id_modulo',
+            'id_periodo'],
+            [6,
+            $periodo_id]
+        );
         if (campoVacio($configuracion_modulo_por_periodo)) 
         {
             // Si no hay registro se crea un nuevo objeto del mismo modelo
@@ -820,6 +825,8 @@ class ActividadesExtraescolaresDashboardController
             // Sincronizamos los valores posteados
             $configuracion_modulo_por_periodo->sincronizar($_POST);
             $configuracion_modulo_por_periodo->id_modulo = 6;
+            debuguear($configuracion_modulo_por_periodo);
+            //debuguear($configuracion_modulo_por_periodo->maximo_cursos_por_periodo);
             // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion para llamar alas respectivas funciones 
             // dichas funciones estan en el objeto
             // Acederemos a cada una de la propiedad y en base a la propiedad aplicaremos la verificacion
@@ -841,7 +848,6 @@ class ActividadesExtraescolaresDashboardController
             {
                 $validar_fecha = false;
             }
-            debuguear($configuracion_modulo_por_periodo);
             if (empty($alertas))
             {
                 if ($validar_fecha === true)

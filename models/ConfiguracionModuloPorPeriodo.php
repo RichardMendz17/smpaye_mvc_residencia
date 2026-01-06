@@ -24,8 +24,10 @@ use DateTime;
             $this->id = $args['id'] ?? NULL;
             $this->id_modulo = isset($args['id_modulo']) ? trim($args['id_modulo']) : '';
             $this->id_periodo = isset($args['id_periodo']) ? trim($args['id_periodo']) : '';
-            $this->maximo_cursos_por_periodo = isset($args['maximo_cursos_por_periodo']) ? trim($args['maximo_cursos_por_periodo']) : null;
-            $this->fecha_limite_inscripcion = isset($args['fecha_limite_inscripcion']) ? trim($args['fecha_limite_inscripcion']) : null;
+            $this->maximo_cursos_por_periodo = (isset($args['maximo_cursos_por_periodo']) && trim($args['maximo_cursos_por_periodo']) !== '')
+            ? trim($args['maximo_cursos_por_periodo']) : null;
+            $this->fecha_limite_inscripcion = (isset($args['fecha_limite_inscripcion']) && trim($args['fecha_limite_inscripcion']) !== '')
+            ? trim($args['fecha_limite_inscripcion']) : null;
         }
 
         public function validar(){

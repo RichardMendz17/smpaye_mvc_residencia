@@ -127,13 +127,6 @@ class PeriodosController {
             $alertas = $periodo->validar();
             if(empty($alertas))
             {
-                $resultado = $periodo->verificar_meses_Periodo('meses_Periodo', $periodo->meses_Periodo, 'year' ,$periodo->year);
-                //debuguear($resultado);
-                if($resultado === false)
-                {
-                    $alertas['error'][] = 'El periodo ya esta registradO';
-                } else
-                    {
                     $periodo->guardar();
                     $tabla = 'periodos';
                     $id_registro = $periodo->id;
@@ -145,7 +138,7 @@ class PeriodosController {
                             header('Location: /periodos');
                             exit; // OBLIGATORIO para que se haga la redirección correctamente
                         }                    
-                    }
+
             }
         }
         $router->render('/periodos/actualizar',[

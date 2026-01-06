@@ -186,7 +186,6 @@ class ActiveRecord {
         }, array_values($atributos)));
 
         $query = "INSERT INTO " . static::$tabla . " ($columnas) VALUES ($valores)";
-        debuguear($query);
         $resultado = self::$db->query($query);
         return [
             'resultado' => $resultado,

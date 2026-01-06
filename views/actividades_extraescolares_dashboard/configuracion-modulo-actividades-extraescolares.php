@@ -11,12 +11,22 @@
 
     <form class="formulario" method="POST" >
         <div class="campo-number">
+            <!-- Si el registro viene con id lo ponemos en un input de hidder -->
+            <input 
+                type="hidden" 
+                id="id_configuracion_modulo_periodo"
+                name="configuracion_modulo_periodo[id]"
+
+                <?php
+                    echo !empty($configuracion_modulo_por_periodo->id) && (int)$configuracion_modulo_por_periodo->id ? 'value=' . $configuracion_modulo_por_periodo->id : '';
+                ?>
+            >
             <label for="limite_cursos_por_periodo">Asignar una cantidad de cursos limite a los que el alumno puede inscribirse</label>
             <input 
                 type="checkbox"
                 id="limite_cursos_por_periodo"
                 <?php
-                    echo !empty($configuracion_modulo_periodo->maximo_cursos_por_periodo) && (int)$configuracion_modulo_periodo->maximo_cursos_por_periodo > 0 ? 'checked' : '';
+                    echo !empty($configuracion_modulo_por_periodo->maximo_cursos_por_periodo) && (int)$configuracion_modulo_por_periodo->maximo_cursos_por_periodo > 0 ? 'checked' : '';
                 ?>
             >
 
@@ -26,10 +36,14 @@
                 id="cantidad_limite_cursos" 
                 placeholder="Ej: 30"
                 <?php
-                    echo !empty($configuracion_modulo_periodo->maximo_cursos_por_periodo) && (int)$configuracion_modulo_periodo->maximo_cursos_por_periodo ? 'value=' . $configuracion_modulo_periodo->maximo_cursos_por_periodo : '0';
+                    echo !empty($configuracion_modulo_por_periodo->maximo_cursos_por_periodo) && (int)$configuracion_modulo_por_periodo->maximo_cursos_por_periodo ? 'value=' . $configuracion_modulo_por_periodo->maximo_cursos_por_periodo : '0';
                 ?>
             >
-            <input type="hidden" id="cantidad_final_cursos_periodo" name="configuracion_modulo_periodo[maximo_cursos_por_periodo]">
+            <input 
+                type="hidden" 
+                id="cantidad_final_cursos_periodo" 
+                name="configuracion_modulo_periodo[maximo_cursos_por_periodo]"
+            >
         </div>
     <hr>    
         <div class="campo-number">
@@ -38,7 +52,7 @@
                     type="checkbox"
                     id="fecha_limite_inscripcion_checkbox"
                 <?php
-                    echo !empty($configuracion_modulo_periodo->fecha_limite_inscripcion) ? 'checked' : '';
+                    echo !empty($configuracion_modulo_por_periodo->fecha_limite_inscripcion) ? 'checked' : '';
                 ?>
             >
 
@@ -49,10 +63,14 @@
                 id="fecha_limite_inscripcion" 
                 placeholder="Ej: 30"
                 <?php
-                    echo !empty($configuracion_modulo_periodo->fecha_limite_inscripcion) ? 'value=' . $configuracion_modulo_periodo->fecha_limite_inscripcion : '0';
+                    echo !empty($configuracion_modulo_por_periodo->fecha_limite_inscripcion) ? 'value=' . $configuracion_modulo_por_periodo->fecha_limite_inscripcion : '0';
                 ?>
             >
-            <input type="hidden" id="fecha_limite_inscripcion_final" name="configuracion_modulo_periodo[fecha_limite_inscripcion]">
+            <input 
+                type="hidden" 
+                id="fecha_limite_inscripcion_final" 
+                name="configuracion_modulo_periodo[fecha_limite_inscripcion]"
+            >
             <input 
             type="hidden" 
             id="configuracion_modulo_periodo_id" 
@@ -61,6 +79,7 @@
                 echo !empty($periodo_seleccionado) ? 'value=' . $periodo_seleccionado : '0';
             ?>
             >
+
         </div>
     <hr>
             <input type="submit" value="Guardar Configuracion Modulo">
