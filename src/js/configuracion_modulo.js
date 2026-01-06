@@ -15,7 +15,7 @@
         {
             const checkbox_limite_cursos = document.querySelector('#limite_cursos_por_periodo');
             const input_cantidad_limite_cursos = document.querySelector('#cantidad_limite_cursos');
-            const input_hidden_fecha_limite_inscripcion_cursos = document.querySelector('#cantidad_final_cursos_periodo');
+            const input_hidden_cantidad_final_cursos_periodo = document.querySelector('#cantidad_final_cursos_periodo');
 
             function actualizarEstadoInputs()
             {
@@ -27,16 +27,16 @@
                     input_cantidad_limite_cursos.disabled = false;
                     // Capturamos el valor colocado en el input visible en el invisible
                     // pero si no tiene ningun valor asignamos vacio
-                    input_hidden_fecha_limite_inscripcion_cursos.value = input_cantidad_limite_cursos.value || 0;
+                    input_hidden_cantidad_final_cursos_periodo.value = input_cantidad_limite_cursos.value || 0;
                     console.log('Valor del input visible para limite de cursos', input_cantidad_limite_cursos.value);
-                    console.log('Valor del input invisible para el limite de cursos', input_hidden_fecha_limite_inscripcion_cursos.value);
+                    console.log('Valor del input invisible para el limite de cursos', input_hidden_cantidad_final_cursos_periodo.value);
                 } 
                 else 
                 {
                     // Si no esta activo el checkbox desactivamos el input visible y asignamos vacio
                     input_cantidad_limite_cursos.disabled = true;
                     input_cantidad_limite_cursos.value = '';
-                    input_hidden_fecha_limite_inscripcion_cursos.value = '';
+                    input_hidden_cantidad_final_cursos_periodo.value = '';
                     // En el input invisible asignamos 
 
                 }

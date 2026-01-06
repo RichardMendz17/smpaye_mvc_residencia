@@ -1,8 +1,11 @@
 <?php
     include_once __DIR__ . '/header-asignacion-rol.php';
 ?>
-
-<p class="descripcion-pagina">Seleccionar Rol del Roles</p>
+<p class="descripcion-pagina">
+    <?php 
+        echo $descripcion_pagina ?? '';
+    ?>
+</p>
 
 <?php 
     $resultado = $_GET['resultado']  ?? NULL;
