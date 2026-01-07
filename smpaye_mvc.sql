@@ -35,7 +35,7 @@ CREATE TABLE `alumno_curso_detalles` (
   KEY `curso_detalle_id` (`curso_detalle_id`),
   CONSTRAINT `alumno_curso_detalles_ibfk_1` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`id`),
   CONSTRAINT `alumno_curso_detalles_ibfk_2` FOREIGN KEY (`curso_detalle_id`) REFERENCES `cursos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,10 @@ CREATE TABLE `alumnos` (
   `id_Carrera` int DEFAULT NULL,
   `telefono` varchar(10) DEFAULT NULL,
   `correo_institucional` varchar(60) DEFAULT NULL,
-  `genero` varchar(10) DEFAULT NULL,
+  `genero` enum('Masculino','Femenino') DEFAULT NULL,
+  `modalidad` enum('Escolarizado','Sabatino') DEFAULT NULL,
+  `condicion_academica` enum('Regular','Irregular') DEFAULT NULL,
+  `estado_academico` enum('Activo','Baja Termporal','Baja Definitiva','Egresado','Titulado') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_Carrera_idx` (`id_Carrera`),
   CONSTRAINT `fk_Carrera_Id` FOREIGN KEY (`id_Carrera`) REFERENCES `carreras` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -76,7 +79,7 @@ CREATE TABLE `alumnos` (
 
 LOCK TABLES `alumnos` WRITE;
 /*!40000 ALTER TABLE `alumnos` DISABLE KEYS */;
-INSERT INTO `alumnos` VALUES (21120077,'Ricardo Adolfo','Mendoza','Escobedo','',1,'2361080962','21120077@ajalpan.tecnm.mx','Masculino'),(21120078,'Ruben Andres','Mendoza','Escobedo','sin comentarios',1,'2361080962','21120078@ajalpan.tecnm.mx','Masculino'),(21120079,'Juan Carlos','Barbosa','Martinez','',1,'2','21120079@ajalpan.tecnm.mx','Masculino');
+INSERT INTO `alumnos` VALUES (21120077,'Ricardo Adolfo','Mendoza','Escobedo','',1,'2361080962','21120077@ajalpan.tecnm.mx','Masculino',NULL,NULL,NULL),(21120078,'Ruben Andres','Mendoza','Escobedo','sin comentarios',1,'2361080962','21120078@ajalpan.tecnm.mx','Masculino',NULL,NULL,NULL),(21120079,'Juan Carlos','Barbosa','Martinez','',1,'2','21120079@ajalpan.tecnm.mx','Masculino',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `alumnos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +99,7 @@ CREATE TABLE `asignacion_roles` (
   KEY `fk_id_rol_idx` (`id_rol`),
   CONSTRAINT `fk_id_personal` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id`),
   CONSTRAINT `fk_id_rol` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +108,7 @@ CREATE TABLE `asignacion_roles` (
 
 LOCK TABLES `asignacion_roles` WRITE;
 /*!40000 ALTER TABLE `asignacion_roles` DISABLE KEYS */;
-INSERT INTO `asignacion_roles` VALUES (3,21120077,2),(5,21120077,3),(7,21120078,13),(16,21120079,5),(17,21120079,2),(18,21120078,2),(22,21120077,0);
+INSERT INTO `asignacion_roles` VALUES (3,21120077,2),(5,21120077,3),(7,21120078,13),(16,21120079,5),(17,21120079,2),(18,21120078,2),(22,21120077,0),(23,21120077,4),(24,21120079,4);
 /*!40000 ALTER TABLE `asignacion_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +151,7 @@ CREATE TABLE `bitacora_eventos` (
   PRIMARY KEY (`id`),
   KEY `fk_Usuario_idx` (`id_Usuario`),
   CONSTRAINT `fk_Usuario` FOREIGN KEY (`id_Usuario`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=179 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +160,7 @@ CREATE TABLE `bitacora_eventos` (
 
 LOCK TABLES `bitacora_eventos` WRITE;
 /*!40000 ALTER TABLE `bitacora_eventos` DISABLE KEYS */;
-INSERT INTO `bitacora_eventos` VALUES (1,3,'Creación del registro con el id 1, perteneciente a la tabla tipos_curso','2025-10-31 23:37:54'),(2,3,'Creación del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-01 17:33:29'),(3,3,'Creación del registro con el id 21120078, perteneciente a la tabla personal','2025-11-01 17:36:35'),(4,3,'Creación del registro con el id 21120079, perteneciente a la tabla personal','2025-11-01 17:37:37'),(5,3,'Actualización del registro con el id 21120079, perteneciente a la tabla personal','2025-11-01 17:41:28'),(6,3,'Actualización del registro con el id 21120077, perteneciente a la tabla personal','2025-11-01 17:47:32'),(7,3,'Actualización del registro con el id 21120078, perteneciente a la tabla personal','2025-11-01 17:47:45'),(8,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-01 17:47:55'),(9,3,'Creación del registro con el id 1, perteneciente a la tabla periodos','2025-11-01 17:55:50'),(10,3,'Eliminación del registro con el id 1, perteneciente a la tabla periodos','2025-11-01 17:55:54'),(11,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:00'),(12,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:04'),(13,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:07'),(14,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:35'),(15,3,'Creación del registro con el id 1, perteneciente a la tabla aulas','2025-11-01 23:17:37'),(16,3,'Creación del registro con el id 2, perteneciente a la tabla aulas','2025-11-01 23:17:41'),(17,3,'Actualización del registro con el id 2, perteneciente a la tabla aulas','2025-11-01 23:17:47'),(18,3,'Eliminación del registro con el id 4, perteneciente a la tabla usuarios','2025-11-03 19:26:51'),(19,3,'Eliminación del registro con el id 5, perteneciente a la tabla usuarios','2025-11-03 19:29:27'),(20,3,'Actualización del registro con el id 21120079, perteneciente a la tabla personal','2025-11-19 20:17:49'),(21,3,'Actualización del registro con el id 21120079, perteneciente a la tabla personal','2025-11-19 20:17:53'),(22,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:24:25'),(23,3,'Actualización del registro con el id 21120077, perteneciente a la tabla alumnos','2025-11-19 20:26:15'),(24,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:26:22'),(25,3,'Actualización del registro con el id 21120078, perteneciente a la tabla personal','2025-11-19 20:40:49'),(26,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:41:06'),(27,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:46:43'),(28,3,'Creación del registro con el id 21120079, perteneciente a la tabla alumnos','2025-11-19 21:36:57'),(29,3,'Eliminación del registro con el id 6, perteneciente a la tabla usuarios','2025-11-19 22:07:30'),(30,3,'Eliminación del registro con el id 7, perteneciente a la tabla usuarios','2025-11-23 18:14:54'),(31,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-24 23:17:49'),(32,3,'Eliminación del registro con el id 2, perteneciente a la tabla asignacion_roles','2025-11-26 21:41:05'),(33,3,'Eliminación del registro con el id 6, perteneciente a la tabla asignacion_roles','2025-11-26 21:41:19'),(34,3,'Eliminación del registro con el id 8, perteneciente a la tabla usuarios','2025-11-26 21:57:38'),(35,3,'Eliminación del registro con el id 9, perteneciente a la tabla usuarios','2025-11-26 21:57:46'),(36,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-26 23:27:13'),(37,3,'Eliminación del registro con el id 19, perteneciente a la tabla asignacion_roles','2025-11-26 23:27:21'),(38,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-26 23:27:34'),(39,3,'Eliminación del registro con el id 20, perteneciente a la tabla asignacion_roles','2025-11-26 23:27:38'),(40,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-26 23:28:04'),(41,3,'Eliminación del registro con el id 21, perteneciente a la tabla asignacion_roles','2025-11-26 23:29:03'),(42,3,'Creación del registro con el id 20, perteneciente a la tabla cursos','2025-12-05 00:42:15'),(43,3,'Creación del registro con el id 20, perteneciente a la tabla cursos','2025-12-05 00:46:27'),(44,3,'Creación del registro con el id 1, perteneciente a la tabla cursos','2025-12-05 18:32:55'),(45,3,'Creación del registro con el id 1, perteneciente a la tabla cursos','2025-12-05 23:33:13'),(46,3,'Creación del registro con el id 65, perteneciente a la tabla cursos','2025-12-06 00:03:01'),(47,3,'Creación del registro con el id 66, perteneciente a la tabla cursos','2025-12-09 01:19:53'),(48,3,'Creación del registro con el id 67, perteneciente a la tabla cursos','2025-12-09 01:20:51'),(49,3,'Creación del registro con el id 68, perteneciente a la tabla cursos','2025-12-09 01:21:13'),(50,3,'Eliminación del registro con el id 68, perteneciente a la tabla curso','2025-12-09 18:59:34'),(51,3,'Creación del registro con el id 3, perteneciente a la tabla tipos_curso','2025-12-10 00:07:39'),(52,3,'Creación del registro con el id 69, perteneciente a la tabla cursos','2025-12-10 19:23:04'),(53,3,'Creación del registro con el id 70, perteneciente a la tabla cursos','2025-12-10 19:24:42'),(54,3,'Creación del registro con el id 71, perteneciente a la tabla cursos','2025-12-10 19:32:52'),(55,3,'Eliminación del registro con el id 71, perteneciente a la tabla curso','2025-12-10 19:39:03'),(56,3,'Eliminación del registro con el id 70, perteneciente a la tabla curso','2025-12-10 19:39:08'),(57,3,'Eliminación del registro con el id 69, perteneciente a la tabla curso','2025-12-10 19:39:12'),(58,3,'Eliminación del registro con el id 67, perteneciente a la tabla curso','2025-12-10 19:40:49'),(59,3,'Creación del registro con el id 72, perteneciente a la tabla cursos','2025-12-10 19:41:10');
+INSERT INTO `bitacora_eventos` VALUES (1,3,'Creación del registro con el id 1, perteneciente a la tabla tipos_curso','2025-10-31 23:37:54'),(2,3,'Creación del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-01 17:33:29'),(3,3,'Creación del registro con el id 21120078, perteneciente a la tabla personal','2025-11-01 17:36:35'),(4,3,'Creación del registro con el id 21120079, perteneciente a la tabla personal','2025-11-01 17:37:37'),(5,3,'Actualización del registro con el id 21120079, perteneciente a la tabla personal','2025-11-01 17:41:28'),(6,3,'Actualización del registro con el id 21120077, perteneciente a la tabla personal','2025-11-01 17:47:32'),(7,3,'Actualización del registro con el id 21120078, perteneciente a la tabla personal','2025-11-01 17:47:45'),(8,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-01 17:47:55'),(9,3,'Creación del registro con el id 1, perteneciente a la tabla periodos','2025-11-01 17:55:50'),(10,3,'Eliminación del registro con el id 1, perteneciente a la tabla periodos','2025-11-01 17:55:54'),(11,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:00'),(12,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:04'),(13,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:07'),(14,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2025-11-01 17:56:35'),(15,3,'Creación del registro con el id 1, perteneciente a la tabla aulas','2025-11-01 23:17:37'),(16,3,'Creación del registro con el id 2, perteneciente a la tabla aulas','2025-11-01 23:17:41'),(17,3,'Actualización del registro con el id 2, perteneciente a la tabla aulas','2025-11-01 23:17:47'),(18,3,'Eliminación del registro con el id 4, perteneciente a la tabla usuarios','2025-11-03 19:26:51'),(19,3,'Eliminación del registro con el id 5, perteneciente a la tabla usuarios','2025-11-03 19:29:27'),(20,3,'Actualización del registro con el id 21120079, perteneciente a la tabla personal','2025-11-19 20:17:49'),(21,3,'Actualización del registro con el id 21120079, perteneciente a la tabla personal','2025-11-19 20:17:53'),(22,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:24:25'),(23,3,'Actualización del registro con el id 21120077, perteneciente a la tabla alumnos','2025-11-19 20:26:15'),(24,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:26:22'),(25,3,'Actualización del registro con el id 21120078, perteneciente a la tabla personal','2025-11-19 20:40:49'),(26,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:41:06'),(27,3,'Actualización del registro con el id 21120078, perteneciente a la tabla alumnos','2025-11-19 20:46:43'),(28,3,'Creación del registro con el id 21120079, perteneciente a la tabla alumnos','2025-11-19 21:36:57'),(29,3,'Eliminación del registro con el id 6, perteneciente a la tabla usuarios','2025-11-19 22:07:30'),(30,3,'Eliminación del registro con el id 7, perteneciente a la tabla usuarios','2025-11-23 18:14:54'),(31,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-24 23:17:49'),(32,3,'Eliminación del registro con el id 2, perteneciente a la tabla asignacion_roles','2025-11-26 21:41:05'),(33,3,'Eliminación del registro con el id 6, perteneciente a la tabla asignacion_roles','2025-11-26 21:41:19'),(34,3,'Eliminación del registro con el id 8, perteneciente a la tabla usuarios','2025-11-26 21:57:38'),(35,3,'Eliminación del registro con el id 9, perteneciente a la tabla usuarios','2025-11-26 21:57:46'),(36,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-26 23:27:13'),(37,3,'Eliminación del registro con el id 19, perteneciente a la tabla asignacion_roles','2025-11-26 23:27:21'),(38,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-26 23:27:34'),(39,3,'Eliminación del registro con el id 20, perteneciente a la tabla asignacion_roles','2025-11-26 23:27:38'),(40,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-11-26 23:28:04'),(41,3,'Eliminación del registro con el id 21, perteneciente a la tabla asignacion_roles','2025-11-26 23:29:03'),(42,3,'Creación del registro con el id 20, perteneciente a la tabla cursos','2025-12-05 00:42:15'),(43,3,'Creación del registro con el id 20, perteneciente a la tabla cursos','2025-12-05 00:46:27'),(44,3,'Creación del registro con el id 1, perteneciente a la tabla cursos','2025-12-05 18:32:55'),(45,3,'Creación del registro con el id 1, perteneciente a la tabla cursos','2025-12-05 23:33:13'),(46,3,'Creación del registro con el id 65, perteneciente a la tabla cursos','2025-12-06 00:03:01'),(47,3,'Creación del registro con el id 66, perteneciente a la tabla cursos','2025-12-09 01:19:53'),(48,3,'Creación del registro con el id 67, perteneciente a la tabla cursos','2025-12-09 01:20:51'),(49,3,'Creación del registro con el id 68, perteneciente a la tabla cursos','2025-12-09 01:21:13'),(50,3,'Eliminación del registro con el id 68, perteneciente a la tabla curso','2025-12-09 18:59:34'),(51,3,'Creación del registro con el id 3, perteneciente a la tabla tipos_curso','2025-12-10 00:07:39'),(52,3,'Creación del registro con el id 69, perteneciente a la tabla cursos','2025-12-10 19:23:04'),(53,3,'Creación del registro con el id 70, perteneciente a la tabla cursos','2025-12-10 19:24:42'),(54,3,'Creación del registro con el id 71, perteneciente a la tabla cursos','2025-12-10 19:32:52'),(55,3,'Eliminación del registro con el id 71, perteneciente a la tabla curso','2025-12-10 19:39:03'),(56,3,'Eliminación del registro con el id 70, perteneciente a la tabla curso','2025-12-10 19:39:08'),(57,3,'Eliminación del registro con el id 69, perteneciente a la tabla curso','2025-12-10 19:39:12'),(58,3,'Eliminación del registro con el id 67, perteneciente a la tabla curso','2025-12-10 19:40:49'),(59,3,'Creación del registro con el id 72, perteneciente a la tabla cursos','2025-12-10 19:41:10'),(60,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-12-11 16:04:27'),(61,3,'Creación del registro con el id , perteneciente a la tabla asignacion_rol','2025-12-18 22:40:20'),(62,3,'Creación del registro con el id 73, perteneciente a la tabla cursos','2025-12-18 23:47:26'),(63,3,'Creación del registro con el id 74, perteneciente a la tabla cursos','2025-12-21 00:13:33'),(64,3,'Eliminación del registro con el id 74, perteneciente a la tabla curso','2025-12-21 00:13:39'),(65,3,'Eliminación del registro con el id 73, perteneciente a la tabla curso','2025-12-21 00:13:44'),(66,3,'Eliminación del registro con el id 72, perteneciente a la tabla curso','2025-12-21 00:13:49'),(67,3,'Creación del registro con el id 76, perteneciente a la tabla cursos','2025-12-21 00:16:30'),(68,3,'Creación del registro con el id 77, perteneciente a la tabla cursos','2025-12-21 00:21:04'),(69,3,'Eliminación del registro con el id 77, perteneciente a la tabla curso','2025-12-21 00:21:10'),(70,3,'Creación del registro con el id 78, perteneciente a la tabla cursos','2025-12-21 00:44:27'),(71,3,'Eliminación del registro con el id 78, perteneciente a la tabla curso','2025-12-21 00:44:33'),(72,3,'Creación del registro con el id 79, perteneciente a la tabla cursos','2025-12-21 00:45:19'),(73,3,'Eliminación del registro con el id 79, perteneciente a la tabla curso','2025-12-21 00:45:48'),(74,3,'Creación del registro con el id 80, perteneciente a la tabla cursos y su requisito','2025-12-21 01:10:29'),(75,3,'Creación del registro con el id 81, perteneciente a la tabla cursos','2025-12-21 01:12:52'),(76,3,'Creación del registro con el id 82, perteneciente a la tabla cursos','2025-12-21 17:02:28'),(77,3,'Eliminación del registro con el id 82, perteneciente a la tabla curso','2025-12-21 17:02:36'),(78,3,'Eliminación del registro con el id 81, perteneciente a la tabla curso','2025-12-21 17:02:46'),(79,3,'Eliminación del registro con el id 80, perteneciente a la tabla curso','2025-12-21 17:24:13'),(80,3,'Creación del registro con el id 83, perteneciente a la tabla cursos y su requisito','2025-12-21 17:40:16'),(81,3,'Creación del registro con el id 84, perteneciente a la tabla cursos','2025-12-25 22:15:14'),(82,3,'Creación del registro con el id 85, perteneciente a la tabla cursos','2025-12-25 23:46:04'),(83,3,'Creación del registro con el id 86, perteneciente a la tabla cursos','2025-12-25 23:46:31'),(84,3,'Eliminación del registro con el id 84, perteneciente a la tabla curso','2025-12-25 23:51:07'),(85,3,'Eliminación del registro con el id 86, perteneciente a la tabla curso','2025-12-25 23:51:12'),(86,3,'Eliminación del registro con el id 85, perteneciente a la tabla curso','2025-12-25 23:51:16'),(87,3,'Eliminación del registro con el id 83, perteneciente a la tabla curso','2025-12-25 23:51:21'),(88,3,'Creación del registro con el id 87, perteneciente a la tabla cursos y su requisito','2025-12-26 19:35:41'),(89,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-26 19:41:51'),(90,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-26 20:53:35'),(91,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-26 20:57:26'),(92,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-26 21:10:08'),(93,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-26 21:19:56'),(94,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 20:46:46'),(95,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 20:46:53'),(96,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:13:33'),(97,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:13:49'),(98,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:14:35'),(99,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:14:45'),(100,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:14:51'),(101,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:15:02'),(102,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:15:10'),(103,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:15:24'),(104,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:16:00'),(105,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:16:06'),(106,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:16:14'),(107,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:23:07'),(108,3,'Actualización del registro con el id 87, perteneciente a la tabla cursos','2025-12-27 21:23:12'),(109,3,'Eliminación del registro con el id 87, perteneciente a la tabla curso','2025-12-27 21:23:27'),(110,3,'Creación del registro con el id 88, perteneciente a la tabla cursos y su requisito','2025-12-27 21:23:41'),(111,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:26:40'),(112,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:27:24'),(113,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:27:34'),(114,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:27:39'),(115,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:27:51'),(116,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:28:55'),(117,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:30:50'),(118,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:32:02'),(119,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:33:01'),(120,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:40:28'),(121,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:40:36'),(122,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:41:29'),(123,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:41:29'),(124,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:41:36'),(125,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:41:54'),(126,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 21:42:02'),(127,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 22:00:39'),(128,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 22:00:46'),(129,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 22:00:59'),(130,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-27 22:05:42'),(131,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-30 23:25:58'),(132,3,'Actualización del registro con el id 88, perteneciente a la tabla curso','2025-12-30 23:38:59'),(133,3,'Actualización del registro con el id 88, perteneciente a la tabla curso','2025-12-30 23:39:03'),(134,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:41:44'),(135,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:41:47'),(136,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:41:50'),(137,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-30 23:41:54'),(138,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:41:56'),(139,3,'Actualización del registro con el id 88, perteneciente a la tabla cursos','2025-12-30 23:42:02'),(140,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:42:49'),(141,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:42:53'),(142,3,'Eliminación del registro con el id 88, perteneciente a la tabla curso','2025-12-30 23:46:48'),(143,3,'Creación del registro con el id 89, perteneciente a la tabla cursos','2025-12-30 23:47:04'),(144,3,'Actualización del registro con el id 89, perteneciente a la tabla cursos','2025-12-30 23:47:07'),(145,3,'Actualización del registro con el id 89, perteneciente a la tabla cursos','2025-12-30 23:47:19'),(146,3,'Eliminación del registro con el id 89, perteneciente a la tabla curso','2025-12-30 23:47:23'),(147,3,'Creación del registro con el id 90, perteneciente a la tabla cursos','2025-12-30 23:47:33'),(148,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:49:57'),(149,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:50:01'),(150,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:50:03'),(151,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:51:15'),(152,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-30 23:51:22'),(153,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-31 00:02:38'),(154,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-31 00:02:41'),(155,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-31 00:04:14'),(156,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-31 00:04:37'),(157,3,'Eliminación del registro con el id 90, perteneciente a la tabla curso','2025-12-31 00:12:19'),(158,3,'Creación del registro con el id 91, perteneciente a la tabla cursos','2025-12-31 00:12:31'),(159,3,'Creación del registro con el id 92, perteneciente a la tabla cursos','2025-12-31 18:08:30'),(160,3,'Actualización del registro con el id 92, perteneciente a la tabla cursos','2025-12-31 18:08:36'),(161,3,'Actualización del registro con el id 92, perteneciente a la tabla cursos','2025-12-31 18:15:09'),(162,3,'Actualización del registro con el id 92, perteneciente a la tabla cursos','2025-12-31 18:26:05'),(163,3,'Actualización del registro con el id 92, perteneciente a la tabla cursos','2025-12-31 18:26:21'),(164,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-31 19:30:19'),(165,3,'Actualización del registro con el id , perteneciente a la tabla curso','2025-12-31 19:30:23'),(166,3,'Creación del registro con el id 2, perteneciente a la tabla periodos','2026-01-02 05:06:56'),(167,3,'Creación del registro con el id 3, perteneciente a la tabla periodos','2026-01-05 18:30:29'),(168,3,'Creación del registro con el id 21120080, perteneciente a la tabla alumnos','2026-01-06 19:58:51'),(169,3,'Eliminación del registro con el id 21120080, perteneciente a la tabla alumnos','2026-01-06 19:59:24'),(170,3,'Eliminación del registro con el id 21120080, perteneciente a la tabla alumnos','2026-01-06 20:00:25'),(171,3,'Creación del registro con el id 3, perteneciente a la tabla configuracion_modulo_periodo','2026-01-06 20:15:13'),(172,3,'Creación del registro con el id 3, perteneciente a la tabla periodos','2026-01-06 21:52:15'),(173,3,'Creación del registro con el id 4, perteneciente a la tabla configuracion_modulo_periodo','2026-01-06 21:54:17'),(174,3,'Creación del registro con el id 5, perteneciente a la tabla configuracion_modulo_periodo','2026-01-06 21:54:23'),(175,3,'Creación del registro con el id 6, perteneciente a la tabla configuracion_modulo_periodo','2026-01-06 21:54:52'),(176,3,'Creación del registro con el id 7, perteneciente a la tabla configuracion_modulo_periodo','2026-01-06 22:14:32'),(177,3,'Creación del registro con el id 7, perteneciente a la tabla configuracion_modulo_periodo','2026-01-07 04:08:46'),(178,3,'Creación del registro con el id 7, perteneciente a la tabla configuracion_modulo_periodo','2026-01-07 04:08:52');
 /*!40000 ALTER TABLE `bitacora_eventos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,6 +189,37 @@ INSERT INTO `carreras` VALUES (1,'Ingeniaría en Sistemas Computacionales');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `configuracion_modulo_periodo`
+--
+
+DROP TABLE IF EXISTS `configuracion_modulo_periodo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `configuracion_modulo_periodo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_modulo` int DEFAULT NULL,
+  `id_periodo` int DEFAULT NULL,
+  `maximo_cursos_por_periodo` int DEFAULT NULL,
+  `fecha_limite_inscripcion` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_id_modulo_configuracion_periodo_idx` (`id_modulo`),
+  KEY `fk_id_periodo_configuracion_modulo_idx` (`id_periodo`),
+  CONSTRAINT `fk_id_modulo_configuracion_periodo` FOREIGN KEY (`id_modulo`) REFERENCES `modulos` (`id`),
+  CONSTRAINT `fk_id_periodo_configuracion_modulo` FOREIGN KEY (`id_periodo`) REFERENCES `periodos` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `configuracion_modulo_periodo`
+--
+
+LOCK TABLES `configuracion_modulo_periodo` WRITE;
+/*!40000 ALTER TABLE `configuracion_modulo_periodo` DISABLE KEYS */;
+INSERT INTO `configuracion_modulo_periodo` VALUES (7,6,2,2,NULL);
+/*!40000 ALTER TABLE `configuracion_modulo_periodo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `curso_requisitos`
 --
 
@@ -202,7 +236,7 @@ CREATE TABLE `curso_requisitos` (
   KEY `fk_id_curso_excluido_requerido` (`curso_excluido`),
   CONSTRAINT `fk_id_curso_excluido_requerido` FOREIGN KEY (`curso_excluido`) REFERENCES `cursos` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_id_curso_requerido` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,6 +245,7 @@ CREATE TABLE `curso_requisitos` (
 
 LOCK TABLES `curso_requisitos` WRITE;
 /*!40000 ALTER TABLE `curso_requisitos` DISABLE KEYS */;
+INSERT INTO `curso_requisitos` VALUES (19,92,2,92);
 /*!40000 ALTER TABLE `curso_requisitos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,6 +266,7 @@ CREATE TABLE `cursos` (
   `inscripcion_alumno` enum('Permitido','No permitido') DEFAULT NULL,
   `limite_alumnos` int DEFAULT NULL,
   `estado` enum('Creado','Abierto','Cerrado','Suspendido') DEFAULT NULL,
+  `requisitos` enum('Si','No') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_periodo_id_idx` (`periodo_id`) /*!80000 INVISIBLE */,
   KEY `fk_aula_id_idx` (`aula_id`) /*!80000 INVISIBLE */,
@@ -240,7 +276,7 @@ CREATE TABLE `cursos` (
   CONSTRAINT `fk_encargado_Id` FOREIGN KEY (`encargado_id`) REFERENCES `personal` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_periodo_Id` FOREIGN KEY (`periodo_id`) REFERENCES `periodos` (`id`),
   CONSTRAINT `fk_tipo_curso_Id` FOREIGN KEY (`tipo_curso_id`) REFERENCES `tipos_curso` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +285,7 @@ CREATE TABLE `cursos` (
 
 LOCK TABLES `cursos` WRITE;
 /*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
-INSERT INTO `cursos` VALUES (72,1,'430bca6025df7b52c3e4de238a5c5f72',2,2,21120077,'Permitido',NULL,'Creado');
+INSERT INTO `cursos` VALUES (91,3,'7ed3899fcc00ef7a2e4d9cdb439f57ca',2,1,21120077,'No permitido',NULL,'Creado','No'),(92,1,'86c36f9edf96a92e83d859e31f5e456a',2,2,21120077,'Permitido',2,'Cerrado','Si');
 /*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,8 +352,11 @@ CREATE TABLE `periodos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `meses_Periodo` varchar(25) DEFAULT NULL,
   `year` int DEFAULT NULL,
+  `estado` enum('Activo','Suspendido','Cerrado') DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_fin` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +365,7 @@ CREATE TABLE `periodos` (
 
 LOCK TABLES `periodos` WRITE;
 /*!40000 ALTER TABLE `periodos` DISABLE KEYS */;
-INSERT INTO `periodos` VALUES (2,'Enero - Junio2222',2025);
+INSERT INTO `periodos` VALUES (2,'Enero - Junio',2026,'Activo','2026-01-01','2026-03-01'),(3,'Agosto -  Diciembre',2025,'Activo','2025-08-01','2025-12-06');
 /*!40000 ALTER TABLE `periodos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,7 +503,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (3,'admin@correo.com','$2y$10$L/5fwI.hIW5PhMc4Glm.6ejha7WCcunv2tTiT5pErRRWCGzTUGXUe',21120077,0,2),(10,'21120079@ajalpan.tecnm.mx','$2y$10$ldp53bLI62hr2xAxCxoWdeb1oSGfPYbvfcMadcXc59QNmcPIPgNa2',21120079,1,1),(11,'21120079@staff.ajalpan.tecnm.mx','$2y$10$mtXtfVAw8O92i.bL5iG9L.BmRLO4DqJOiUjzDdMRrUd4Z13cax8n6',21120079,NULL,2);
+INSERT INTO `usuarios` VALUES (3,'admin@correo.com','$2y$10$L/5fwI.hIW5PhMc4Glm.6ejha7WCcunv2tTiT5pErRRWCGzTUGXUe',21120077,3,2),(10,'21120079@ajalpan.tecnm.mx','$2y$10$ldp53bLI62hr2xAxCxoWdeb1oSGfPYbvfcMadcXc59QNmcPIPgNa2',21120079,1,1),(11,'21120079@staff.ajalpan.tecnm.mx','$2y$10$ywVY81DG3Vg6QOXciojgx.t0ntIyjhxL/2rCp0032ERDslS.kjMvu',21120079,4,2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -477,4 +516,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-10 21:44:34
+-- Dump completed on 2026-01-07 11:40:09
