@@ -825,7 +825,6 @@ class ActividadesExtraescolaresDashboardController
             // Sincronizamos los valores posteados
             $configuracion_modulo_por_periodo->sincronizar($_POST);
             $configuracion_modulo_por_periodo->id_modulo = 6;
-            debuguear($configuracion_modulo_por_periodo);
             //debuguear($configuracion_modulo_por_periodo->maximo_cursos_por_periodo);
             // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion para llamar alas respectivas funciones 
             // dichas funciones estan en el objeto
