@@ -59,11 +59,19 @@ use DateTime;
 
         public function validarFechaLimiteDeInscripcion()
         {
-            if( campoVacio($this->fecha_limite_inscripcion) || !DateTime::createFromFormat('Y-m-d', $this->fecha_limite_inscripcion)) 
+            if( campoVacio($this->fecha_limite_inscripcion)) 
             {   // Ejemplo de como aplicar una doble validacion con una alerta adecuada
                 self::$alertas['error'][] = 'La fecha límite de inscripción es obligatoria y debe ser válida';
             }
-                return self::$alertas;
+
+            $fecha = DateTime::createFromFormat('Y-m-d', $this->fecha_limite_inscripcion);
+            $errores = DateTime::getLastErrors();
+
+            if ($fecha === false || $errores['warning_count'] > 0 || $errores['error_count'] > 0)
+            {
+                self::$alertas['error'][] = 'La fecha límite de inscripción debe ser válida (YYYY-MM-DD)';
+            }
+            return self::$alertas;
         }
 
         public function validar_Fecha_Limite_De_Inscripcion_Con_Fecha_de_Inicio_y_Final_De_Periodo($periodo_seleccionado)

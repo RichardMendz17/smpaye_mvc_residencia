@@ -825,15 +825,42 @@ class ActividadesExtraescolaresDashboardController
             // Sincronizamos los valores posteados
             $configuracion_modulo_por_periodo->sincronizar($_POST);
             $configuracion_modulo_por_periodo->id_modulo = 6;
-            //debuguear($configuracion_modulo_por_periodo->maximo_cursos_por_periodo);
-            // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion para llamar alas respectivas funciones 
-            // dichas funciones estan en el objeto
-            // Acederemos a cada una de la propiedad y en base a la propiedad aplicaremos la verificacion
-            // la verificacion son funciones propias en el modelo de ConfiguracionModuloPorPeriodo
-            if (campoVacio($configuracion_modulo_por_periodo->maximo_cursos_por_periodo) && campoVacio($configuracion_modulo_por_periodo->fecha_limite_inscripcion)) 
+
+            // Ahora verificamos si 
+            // maximo_cursos_por_periodo y fecha_limite_inscripcion son vacios pero el objeto viene con un id
+            // guardamos esos campos vacios
+            if(
+                campoVacio($configuracion_modulo_por_periodo->maximo_cursos_por_periodo) && 
+                campoVacio($configuracion_modulo_por_periodo->fecha_limite_inscripcion) && 
+                campoVacio($configuracion_modulo_por_periodo->id)
+                ) 
             {
                 $alertas['error'][] = 'No hay configuraciones que guardar';
             }
+            else
+            {   // Para guardar no olvides validar alertas previo a el guardado
+                if(empty($alertas))
+                {
+                    $resultado = $configuracion_modulo_por_periodo->guardar();
+                    $resultado_id = $resultado['id'];
+                    if (!campoVacio($resultado_id))
+                    {
+                        $tabla = 'configuracion_modulo_periodo';
+                        $_SESSION['mensaje_exito'] = 'La configuracion para el periodo fue guardada correctamente.';
+                        $evento = new BitacoraEventos;
+                        $evento->eventos(1, $resultado_id, $tabla);
+                        header('Location: /configuracion-modulo-actividades-extraescolares?periodo_id=' . 
+                        $configuracion_modulo_por_periodo->id_periodo);
+                        exit; // OBLIGATORIO para que se haga la redirección correctamente
+                    }   
+                }
+            }
+
+            // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion 
+            // para llamar alas respectivas funciones 
+            // dichas funciones estan en el objeto
+            // Acederemos a cada una de la propiedad y en base a la propiedad aplicaremos la verificacion
+            // la verificacion son funciones propias en el modelo de ConfiguracionModuloPorPeriodo
             if (!campoVacio($configuracion_modulo_por_periodo->maximo_cursos_por_periodo))
             {
                 $alertas = $configuracion_modulo_por_periodo->validarMaximoCursosPorPeriodo();
@@ -841,12 +868,16 @@ class ActividadesExtraescolaresDashboardController
             if(!campoVacio($configuracion_modulo_por_periodo->fecha_limite_inscripcion))
             {   // Mezclamos el array de alertas
                 $alertas = array_merge($alertas, $configuracion_modulo_por_periodo->validarFechaLimiteDeInscripcion());
-                $validar_fecha = true;
-            } 
-            else 
-            {
-                $validar_fecha = false;
+                if (empty($alertas))
+                {
+                    $validar_fecha = true;
+                }
+                else
+                {
+                    $validar_fecha = false;
+                }
             }
+
             if (empty($alertas))
             {
                 if ($validar_fecha === true)
@@ -862,7 +893,7 @@ class ActividadesExtraescolaresDashboardController
                         if (!campoVacio($resultado_id))
                         {
                             $tabla = 'configuracion_modulo_periodo';
-                            $_SESSION['mensaje_exito'] = 'La configuracion para el periodo fue asignada correctamente.';
+                            $_SESSION['mensaje_exito'] = 'La configuracion para el periodo fue guardada correctamente.';
                             $evento = new BitacoraEventos;
                             $evento->eventos(1, $resultado_id, $tabla);
                             header('Location: /configuracion-modulo-actividades-extraescolares?periodo_id=' . $configuracion_modulo_por_periodo->id_periodo);
@@ -877,7 +908,7 @@ class ActividadesExtraescolaresDashboardController
                     if (!campoVacio($resultado_id))
                     {
                         $tabla = 'configuracion_modulo_periodo';
-                        $_SESSION['mensaje_exito'] = 'La configuracion para el periodo fue asignada correctamente.';
+                        $_SESSION['mensaje_exito'] = 'La configuracion para el periodo fue guardada correctamente.';
                         $evento = new BitacoraEventos;
                         $evento->eventos(1, $resultado_id, $tabla);
                         header('Location: /configuracion-modulo-actividades-extraescolares?periodo_id=' . $configuracion_modulo_por_periodo->id_periodo);

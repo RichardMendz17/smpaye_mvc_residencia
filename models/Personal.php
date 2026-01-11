@@ -27,14 +27,18 @@
         if(campoVacio($this->id))
         {
             self::$alertas['error'][] = 'El Número de la Matrícula es obligatorio';
-        } else {
+        } 
+        else 
+        {
             // Validar que tenga 8 dígitos exactos (o al menos 8)
-            if (!preg_match('/^\d{8,}$/', $this->id)) {
+            if (!preg_match('/^\d{8,}$/', $this->id))
+            {
                 self::$alertas['error'][] = 'El Número de Matrícula debe tener al menos 8 dígitos numéricos, con el primer digito diferente de 0';
             }
 
             // Validar que no sea '00000000' ni '00000001'
-            if (in_array($this->id, ['00000000', '00000001'])) {
+            if (in_array($this->id, ['00000000', '00000001']))
+            {
                 self::$alertas['error'][] = 'El Número de Matrícula no puede ser un valor inválido';
             }
         }

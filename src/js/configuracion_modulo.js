@@ -72,7 +72,7 @@
                     input_fecha_limite_inscripcion.disabled = false;
                     // Capturamos el valor colocado en el input visible en el invisible
                     // pero si no tiene ningun valor asignamos vacio
-                    input_hidden_fecha_limite_inscripcion.value = input_fecha_limite_inscripcion.value || 'null';
+                    input_hidden_fecha_limite_inscripcion.value = input_fecha_limite_inscripcion.value || 0;
                     console.log('Valor del input visible para la fecha limite de inscripcion', input_fecha_limite_inscripcion.value);
                     console.log('Valor del input invisible para la fecha limite de inscripcion', input_hidden_fecha_limite_inscripcion.value);
                 } 
