@@ -818,6 +818,8 @@ class ActividadesExtraescolaresDashboardController
         }
         if($_SERVER['REQUEST_METHOD'] === 'POST') 
         {
+            // inicializamos la variable de validar_fecha
+            $validar_fecha = null;
             // Creamos el objeto
             $configuracion_modulo_por_periodo = new ConfiguracionModuloPorPeriodo($_POST['configuracion_modulo_periodo']);
             // planeaba enviar el id del modulo desde el form pero es mas seguro asignarlo aqui
