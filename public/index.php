@@ -19,7 +19,6 @@ use Controllers\InglesDashboardController;
 use Controllers\ApiHorariosClaseController;
 use Controllers\ArchivosUsuariosController;
 use Controllers\PersonalController;
-use Controllers\ActividadesExtraescolaresTiposController;
 use Controllers\ActividadesExtraescolaresDashboardController;
 use Controllers\ApiPersonalController;
 use Controllers\AsignacionRolesController;

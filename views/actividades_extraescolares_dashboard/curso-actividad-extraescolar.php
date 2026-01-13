@@ -13,12 +13,10 @@
                                 <th>Actividad <br> Extraescolar</th>
                                 <th>Periodo</th>
                                 <th>Aula</th>
-                                <?php if(es_extracurricular_activities_coordinator()){ ?>
                                 <th>Registro <br> por el alumno</th>
                                 <th>Limite de  <br> Alumnos</th>
                                 <th>Cursos requeridos <br> para ingresar </th>
                                 <th>Estado del <br> Curso</th>
-                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody > <!-- Mostrar los resultados -->
@@ -27,7 +25,7 @@
                                 <td class="nombre_Nivel"> <?php echo $actividad_extraescolar_curso->nombre_curso; ?> </td>
                                 <td class="periodo"> <?php echo $actividad_extraescolar_curso->periodo; ?> </td>
                                 <td class="nombre_Aula"> <?php echo $actividad_extraescolar_curso->nombre_Aula; ?> </td>
-                                <?php if(es_extracurricular_activities_coordinator()){ ?>
+                                
                                 <td class="inscripcion_alumno"> <?php  echo $actividad_extraescolar_curso->inscripcion_alumno ?> </td>
                                 <td class="limite_alumnos"> 
                                 <?php  
@@ -47,6 +45,7 @@
                                     <span class="estado_actual">
                                         <?php echo $actividad_extraescolar_curso->estado; ?>
                                     </span>
+                                <?php if(es_extracurricular_activities_coordinator()){ ?>
                                     <div class="curso-dropdown">
                                         <button class="config-btn-estado">
                                             <i class="fa-solid fa-sliders"></i>
@@ -199,15 +198,15 @@ if (es_extracurricular_activities_coordinator())
 } 
 else if (es_extracurricular_activities_instructor()) 
 { //alumnos_curso_instructor_actividad_extraescolar
-    $script .= '<script src="build/js/actividad_extraescolar_instructor_alumnos_en_curso.js"></script>';
-    $script .= '<script src="build/js/actividad_extraescolar_horario_del_curso.js"></script>';
+    $script .= '<script src="build/js/alumnos_curso_docente.js"></script>';
+    $script .= '<script src="build/js/horario_curso.js"></script>';
 
 } 
 else if (es_student())
 {
-    $script .= '<script src="build/js/actividad_extraescolar_alumno_alumnos_en_curso.js"></script>';
-    $script .= '<script src="build/js/actividad_extraescolar_horario_del_curso.js"></script>';
-    $script .= '<script src="build/js/actividad_extraescolar_boleta_alumno_curso.js"></script>';
+    $script .= '<script src="build/js/alumnos_curso_alumno.js"></script>';
+    $script .= '<script src="build/js/horario_curso.js"></script>';
+    $script .= '<script src="build/js/boleta_alumno.js"></script>';
 }
 // career_manager u otros roles no cargan script extra
 ?>

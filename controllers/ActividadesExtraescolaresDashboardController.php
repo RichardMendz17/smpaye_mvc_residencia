@@ -839,9 +839,6 @@ class ActividadesExtraescolaresDashboardController
             {
                 $alertas['error'][] = 'No hay configuraciones que guardar';
             }
-
-
-
             // Ahora hay que validar si puso maximo de cursos por periodo o fecha limite de inscripcion 
             // para llamar alas respectivas funciones 
             // dichas funciones estan en el objeto
@@ -863,7 +860,6 @@ class ActividadesExtraescolaresDashboardController
                     $validar_fecha = false;
                 }
             }
-
             // Ahora si no hay alertas procedemos
             if (empty($alertas))
             {
