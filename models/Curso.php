@@ -116,7 +116,8 @@ class Curso extends ActiveRecord
         
         $resultado = self::consultarSQL($sql);
         return $resultado[0]->total ?? 0;
-    }    
+    }
+
 
 }
 ?>

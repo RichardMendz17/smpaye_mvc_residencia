@@ -212,19 +212,8 @@ class ActividadesExtraescolaresDashboardController
                 // En caso de que la variable sea 'Si' sincronizamos datos
                 $curso_requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
                 $curso_requisitos->sincronizar($_POST);
-                // Verificamos que sea numerico
-                if (!is_numeric($curso_requisitos->minimo_aprobados))
-                {
-                    $alertas['error'][] = 'Coloque un minimo de actividades aprobadas necesarias para ingresar al curso';
-                }
-                // Verificamos que el valor sea como minimo mayor a 0
-                else 
-                {
-                    if ($curso_requisitos->minimo_aprobados <= 0)
-                    {
-                        $alertas['error'][] = 'Cantidad de actividades aprobadas para ingresar al curso invalida';
-                    }
-                }
+                // Validamos el requisito del curso
+                $curso_requisitos->validarCantidadCursosAprobados();
                 // Si no hay alertar declaramos la variable de $requisitos que posteriormente indicara que deberan registrarse los requisitos
                 if (empty($alertas))
                 {
@@ -530,27 +519,27 @@ class ActividadesExtraescolaresDashboardController
                 // Validamos si se van a poner requisitos
                 if ($curso->requisitos === 'Si')
                 {
-                    // Creamos el curso de requisitos
+                    // En caso de que la variable sea 'Si' sincronizamos datos
                     $curso_requisitos = new Curso_Requisitos($_POST['curso_requisitos']);
                     $curso_requisitos->sincronizar($_POST);
+                    // Validamos el requisito del curso
+                    $alertas = $curso_requisitos->validarCantidadCursosAprobados();
+                    // Si no hay alertar declaramos la variable de $requisitos que posteriormente indicara que deberan registrarse los requisitos
+                    if (empty($alertas))
+                    {
+                        $requisitos = true;
+                    }
+                    else
+                    {
+                        $requisitos = false;
+                    }
 
-                    // Validamos si es numerico
-                    if (!is_numeric($curso_requisitos->minimo_aprobados))
-                    {
-                        $alertas['error'][] = 'Coloque un minimo de actividades aprobadas necesarias para ingresar al curso';
-                    }
-                    // Verificamos que el valor sea como minimo mayor a 0
-                    else if ($curso_requisitos->minimo_aprobados <= 0)
-                    {
-                        $alertas['error'][] = 'Cantidad de actividades aprobadas para ingresar al curso invalida';
-                    }
                     // Si no hay alertar declaramos la variable de $requisitos que posteriormente indicara que deberan registrarse los requisitos
                     //debuguear($alertas);
                     if (empty($alertas))
                     {
                         // Capturamos el id del curso
                         $id_registro_curso = $curso->id;
-                        $requisitos = true;
                         // Ahora buscamos si hay un registro que de requisitos para el curso
                         $curso_requisitos_existente = Curso_Requisitos::where('id_curso', $id_registro_curso);
                         // Si ya hay un registro lo traemos y actualizamos el valor de la propiedad

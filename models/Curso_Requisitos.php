@@ -40,6 +40,22 @@ class Curso_Requisitos extends ActiveRecord
         return self::$alertas;
     }
     
+    public function validarCantidadCursosAprobados()
+    {
+        // Podriamos poder todo en un solo if 
+        // pero prefiero ser lo mas especifico y explicito con el usuario
+        if (!is_numeric($this->minimo_aprobados) || $this->minimo_aprobados <= 0) 
+        {
+            self::$alertas['error'][] = 'La cantidad de Cursos minimos aprobados debe ser valida';
+
+        }
+        if (campoVacio($this->minimo_aprobados))
+        {
+            self::$alertas['error'][] = 'La cantidad de Cursos minimos aprobados es obligatoria';
+        }
+        return self::$alertas;
+
+    }
 
 }
 ?>
