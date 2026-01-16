@@ -30,18 +30,7 @@
                             <td class="apellido_Paterno"> <?php echo $persona->apellido_Paterno;?> </td>
                             <td class="apellido_Materno"> <?php echo $persona->apellido_Materno;?> </td>
                             <td class="genero"> <?php echo $persona->genero;?> </td>
-                            <?php if(es_admin() && ($crear ?? false)){  ?>
-                            <td class="acciones-crud">
-                                <a href="/personal-actualizar?id=<?php echo s($persona->id); ?>" 
-                                    class="boton-amarillo-block">Actualizar</a>
-                                <form method="POST" action="personal-eliminar" class="form-eliminar">
-                                    <input type="hidden" name="id" value="<?php echo s($persona->id); ?>">
-                                    <input type="hidden" name="tipo" value="concepto">
-                                    <input type="submit" class="boton-rojo-block" value="Eliminar">
-                                </form>
-                            </td>
                         </div>
-                        <?php } ?>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

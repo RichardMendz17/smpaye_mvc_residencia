@@ -840,7 +840,8 @@ class ActividadesExtraescolaresDashboardController
             } 
             if(!campoVacio($configuracion_modulo_por_periodo->fecha_limite_inscripcion))
             {   // Mezclamos el array de alertas
-                $alertas = array_merge($alertas, $configuracion_modulo_por_periodo->validarFechaLimiteDeInscripcion());
+                $alertas2 = $configuracion_modulo_por_periodo->validarFechaLimiteDeInscripcion();
+                $alertas = array_merge($alertas, $alertas2);
                 if (empty($alertas))
                 {
                     $validar_fecha = true;
