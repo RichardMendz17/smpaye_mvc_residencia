@@ -820,6 +820,7 @@ class ActividadesExtraescolaresDashboardController
             // Ahora verificamos si 
             // maximo_cursos_por_periodo y fecha_limite_inscripcion son vacios pero el objeto viene con un id
             // guardamos esos campos vacios
+            //debuguear($configuracion_modulo_por_periodo);
             if(
                 campoVacio($configuracion_modulo_por_periodo->maximo_cursos_por_periodo) && 
                 campoVacio($configuracion_modulo_por_periodo->fecha_limite_inscripcion) && 
