@@ -78,6 +78,8 @@ class Router
             '/api/horario-curso', '/api/horario-curso-agregar',  '/api/horario-curso-eliminar',
             // Ver Periodos
             '/periodos',
+            // Instructores
+            '/instructores-actividades-extraescolares'
 
         ],
 

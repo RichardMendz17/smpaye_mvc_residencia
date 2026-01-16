@@ -903,5 +903,26 @@ class ActividadesExtraescolaresDashboardController
             'configuracion_modulo_por_periodo' => $configuracion_modulo_por_periodo
         ]);
     }
+    public static function instructores(Router $router)
+    {
+    // Ahora necesitamos traernos al personal que tenga el rol de instructor de Actividades extraescolares segun este modulo
+    // Construimos la consulta base
+    $query_base  = "SELECT personal.id, personal.nombre, personal.apellido_Paterno, personal.apellido_Materno, personal.genero FROM personal ";
+    $query_base .= "LEFT OUTER JOIN asignacion_roles ON asignacion_roles.id_personal = personal.id ";
+    // El id del rol que pertenece a Instructor de actividades extraescolares es:
+    // 4
+    $query_base .= "WHERE asignacion_roles.id_rol = 4";
+    $personal = Personal::SQL($query_base);
+
+    // Inicializamos otras variables
+    // de acuerdo alos templates usados y etc
+    $alertas = [];
+    $router->render('actividades_extraescolares_dashboard/instructores',[
+        'titulo_pagina' => 'Instructores activos',
+        'sidebar_nav' => 'instructores',
+        'personal' => $personal,
+        'alertas' => $alertas
+    ]);
+    }
 }
 ?>
